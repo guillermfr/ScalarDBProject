@@ -12,7 +12,7 @@ public class ScalarDBUtil {
     private final DistributedTransactionManager manager;
 
     public ScalarDBUtil() throws IOException {
-        TransactionFactory transactionFactory = TransactionFactory.create("/home/cytech/Desktop/Advanced course in database systems/Project/Test/JEEMarketplace/database.properties");
+        TransactionFactory transactionFactory = TransactionFactory.create("/home/cytech/Desktop/Advanced course in database systems/Project/Test/JEEMarketplace/scalardb.properties");
         manager = transactionFactory.getTransactionManager();
     }
 
