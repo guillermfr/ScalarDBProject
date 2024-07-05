@@ -7,12 +7,23 @@ import com.scalar.db.service.TransactionFactory;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Optional;
+import java.util.Properties;
 
 public class ScalarDBUtil {
     private final DistributedTransactionManager manager;
 
     public ScalarDBUtil() throws IOException {
-        TransactionFactory transactionFactory = TransactionFactory.create("/home/cytech/Desktop/Advanced course in database systems/Project/Test/JEEMarketplace/database.properties");
+        Properties loadProperties = new Properties();
+        try (InputStream input = getClass().getClassLoader().getResourceAsStream("database.properties")) {
+            if (input == null) {
+                throw new IOException("database.properties not found");
+            }
+            loadProperties.load(input);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        TransactionFactory transactionFactory = TransactionFactory.create(loadProperties);
         manager = transactionFactory.getTransactionManager();
     }
 
