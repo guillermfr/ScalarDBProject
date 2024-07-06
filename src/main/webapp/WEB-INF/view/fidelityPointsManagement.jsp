@@ -4,7 +4,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Gestion des points de fidélité</title>
+    <title>Loyalty points management</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <%
@@ -14,24 +14,24 @@
 
 <%@ include file="components/header.jsp" %>
 
-<h1 class="text-5xl font-extrabold dark:text-black px-8 pt-5">Page de gestion des points de fidélité</h1>
+<h1 class="text-5xl font-extrabold dark:text-black px-8 pt-5">Loyalty points management page</h1>
 
 <div class="w-4/5 bg-white shadow flex justify-between items-center py-5">
     <div class="h-full w-full flex items-center">
         <form action="productManagement" method="get">
-            <button type="submit" class="ml-2 px-10 bg-blue-500 hover:bg-blue-600 text-white font-bold rounded">
-                Gestion des produits
-            </button>
+            <buton type="submit" class="ml-2 px-10 bg-blue-500 hover:bg-blue-600 text-white font-bold rounded">
+                Product management
+            </buton>
         </form>
         <form action="fidelityPointsManagement" method="get">
             <button type="submit" class="ml-2 px-10 bg-gray-300 hover:bg-gray-400 text-white font-bold rounded" disabled>
-                Gestion des points de fidélité
+                Loyalty points management
             </button>
         </form>
     </div>
 </div>
 
-<p class="dark:text-black px-8 pt-5">Vous pouvez modifier le nombre de points de fidélité des utilisateurs, puis appuyer sur le bouton Valider pour que les changements soient effectifs.</p>
+<p class="dark:text-black px-8 pt-5">You can modify users loyalty points then click on Validate buton to apply your changement.</p>
 
 <br>
 
@@ -43,17 +43,17 @@
 
                     <thead class="border-b font-medium dark:border-neutral-500">
                         <tr>
-                            <th scope="col" class="px-6 py-4">Nom complet</th>
+                            <th scope="col" class="px-6 py-4">Name</th>
                             <th scope="col" class="px-6 py-4">ID</th>
-                            <th scope="col" class="px-6 py-4">Adresse email</th>
-                            <th scope="col" class="px-6 py-4">Points de fidélité</th>
+                            <th scope="col" class="px-6 py-4">Email</th>
+                            <th scope="col" class="px-6 py-4">Loyalty points</th>
                         </tr>
                     </thead>
 
                     <form action="updateFidelityPointsManagement-servlet" method="post">
 
                         <button type="submit" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center">
-                            Valider
+                            Validate
                         </button>
 
                         <%

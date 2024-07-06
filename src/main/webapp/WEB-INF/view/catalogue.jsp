@@ -15,7 +15,7 @@
 <body>
     <%@ include file="components/header.jsp" %>
 
-    <div class="flex flex-col justify-center text-xl font-semibold p-3">Nos produits</div>
+    <div class="flex flex-col justify-center text-xl font-semibold p-3">Our products</div>
     <% for(Articles product : articles) { %>
         <a href="productPage?id=<%= product.getId() %>">
             <div class=" float-left w-64 h-64 border p-4 m-4 cursor-pointer">

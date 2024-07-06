@@ -58,7 +58,7 @@
                                 </c:otherwise>
                             </c:choose>
                                 <button type="submit" class="mx-3 rounded-full bg-blue-400 px- py-2 text-white p-2 hover:bg-blue-500 focus:outline-none">
-                                Ajouter au panier
+                                Add to the cart
                             </button>
                         </form>
                     </div>
