@@ -1,8 +1,9 @@
 package com.cytech.marketplace.servlet;
 
-import com.cytech.marketplace.dao.ArticlesDAOold;
+import com.cytech.marketplace.dao.ArticlesDAO;
 import com.cytech.marketplace.entity.Articles;
 import com.cytech.marketplace.utils.CheckIntFloat;
+import com.scalar.db.exception.transaction.AbortException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -10,9 +11,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
-import java.math.BigDecimal;
-import java.math.BigInteger;
-import java.util.UUID;
 
 @WebServlet(name = "modifyProductServlet", value = "/modifyProduct-servlet")
 public class ModifyProductServlet extends HttpServlet {
@@ -33,6 +31,8 @@ public class ModifyProductServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        ArticlesDAO articlesDAO = new ArticlesDAO();
+
         String nom = req.getParameter("nom");
         String prix = req.getParameter("prix");
         String stock = req.getParameter("stock");
@@ -42,13 +42,22 @@ public class ModifyProductServlet extends HttpServlet {
         boolean correctValues = checkValues(nom, prix, stock, image);
 
         if(correctValues) {
-            Articles modifiedProduct = new Articles(nom, new BigDecimal(prix), new BigInteger(stock), image);
-            modifiedProduct.setId(UUID.fromString(id));
-            ArticlesDAOold.updateArticle(modifiedProduct);
+            Articles modifiedProduct = new Articles(nom, Float.parseFloat(prix), Integer.parseInt(stock), image);
+            modifiedProduct.setId(Long.parseLong(id));
+            try {
+                articlesDAO.updateArticle(modifiedProduct);
+            } catch (AbortException e) {
+                throw new RuntimeException(e);
+            }
             req.getRequestDispatcher("/WEB-INF/view/productManagement.jsp").forward(req, resp);
         }
         else {
-            Articles modifiedProduct = ArticlesDAOold.getArticle(UUID.fromString(id));
+            Articles modifiedProduct;
+            try {
+                modifiedProduct = articlesDAO.getArticle(Long.parseLong(id));
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
             req.setAttribute("produit", modifiedProduct);
             req.setAttribute("error", true);
             req.getRequestDispatcher("/WEB-INF/view/modifyProduct.jsp").forward(req, resp);
