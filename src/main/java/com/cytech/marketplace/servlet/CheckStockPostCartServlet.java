@@ -5,6 +5,7 @@ import com.cytech.marketplace.entity.Articles;
 import com.cytech.marketplace.entity.Users;
 import com.cytech.marketplace.utils.CartUtil;
 import com.cytech.marketplace.utils.UsersUtil;
+import com.scalar.db.exception.transaction.TransactionException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -39,7 +40,11 @@ public class CheckStockPostCartServlet extends HttpServlet {
                 cart.remove(article);
                 if (cart.isEmpty()) {
                     if (users != null) {
-                        UsersUtil.setCart(users, null);
+                        try {
+                            UsersUtil.setCart(users, null);
+                        } catch (TransactionException e) {
+                            throw new RuntimeException(e);
+                        }
                     }
                     req.getRequestDispatcher("/WEB-INF/view/cart.jsp").forward(req, resp);
                     return;
@@ -66,7 +71,11 @@ public class CheckStockPostCartServlet extends HttpServlet {
         }
 
         if (users != null) {
-            UsersUtil.setCart(users, cart);
+            try {
+                UsersUtil.setCart(users, cart);
+            } catch (TransactionException e) {
+                throw new RuntimeException(e);
+            }
         }
 
         resp.sendRedirect(getServletContext().getContextPath() + "/infopersonnal");

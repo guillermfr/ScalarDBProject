@@ -6,6 +6,7 @@ import com.cytech.marketplace.entity.Users;
 import com.cytech.marketplace.utils.CartUtil;
 import com.cytech.marketplace.utils.UsersUtil;
 import com.scalar.db.exception.transaction.AbortException;
+import com.scalar.db.exception.transaction.TransactionException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -95,14 +96,26 @@ public class InfoPaymentServlet extends HttpServlet {
             if (usePoints) {
                 loyaltyPoints = user.getLoyaltyPoints();
                 total = total.subtract(new BigDecimal(user.getLoyaltyPoints()).divide(new BigDecimal(100)));
-                UsersUtil.removeLoyaltyPoints(user, user.getLoyaltyPoints());
+                try {
+                    UsersUtil.removeLoyaltyPoints(user, user.getLoyaltyPoints());
+                } catch (TransactionException e) {
+                    throw new RuntimeException(e);
+                }
             } else {
-                UsersUtil.addLoyaltyPoints(user, total.intValue());
+                try {
+                    UsersUtil.addLoyaltyPoints(user, total.intValue());
+                } catch (TransactionException e) {
+                    throw new RuntimeException(e);
+                }
             }
 
 
             // Supprimer toutes les variables de session qui ne sont plus utiles
-            CartUtil.emptyCart(req);
+            try {
+                CartUtil.emptyCart(req);
+            } catch (TransactionException e) {
+                throw new RuntimeException(e);
+            }
             req.getSession().removeAttribute("total");
             req.getSession().removeAttribute("personnalInformation");
             req.getSession().removeAttribute("error");
