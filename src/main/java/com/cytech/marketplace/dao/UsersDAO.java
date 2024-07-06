@@ -51,7 +51,7 @@ public class UsersDAO {
                         .textValue("email", user.getEmail())
                         .textValue("name", user.getName())
                         .textValue("password", user.getPassword())
-                        .booleanValue("isAdmin", user.getAdmin())
+                        .booleanValue("is_admin", user.getAdmin())
                         .intValue("loyalty_points", user.getLoyaltyPoints())
                         .textValue("cart", user.getCart())
                         .build()
