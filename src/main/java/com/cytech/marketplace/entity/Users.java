@@ -1,11 +1,6 @@
 package com.cytech.marketplace.entity;
 
-import jakarta.persistence.*;
 import org.springframework.security.crypto.bcrypt.BCrypt;
-
-import java.math.BigInteger;
-import java.util.Objects;
-import java.util.UUID;
 
 public class Users {
     private String email;
@@ -14,7 +9,7 @@ public class Users {
     private Boolean isAdmin;
     private int loyaltyPoints;
     private String cart;
-    private int id;
+    private long id;
 
     public String getEmail() {
         return email;
@@ -64,11 +59,11 @@ public class Users {
         this.cart = cart;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
