@@ -149,7 +149,7 @@ public class ArticlesDAO {
                             Get.newBuilder()
                                     .namespace("marketplace")
                                     .table("articles")
-                                    .partitionKey(Key.ofInt("id", id))
+                                    .partitionKey(Key.ofBigInt("id", id))
                                     .build());
             if (!result.isPresent()) {
                 throw new Exception("Article not found");

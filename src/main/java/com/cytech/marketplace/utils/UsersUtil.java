@@ -45,8 +45,8 @@ public class UsersUtil {
         UsersDAOold.updateUser(user);
     }
 
-    public static void removeLoyaltyPoints(Users user, BigInteger points) {
-        user.setLoyaltyPoints(user.getLoyaltyPoints().subtract(points));
+    public static void removeLoyaltyPoints(Users user, int points) {
+        user.setLoyaltyPoints(user.getLoyaltyPoints());
         UsersDAOold.updateUser(user);
     }
 }

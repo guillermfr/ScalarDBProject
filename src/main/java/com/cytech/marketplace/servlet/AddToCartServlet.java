@@ -1,6 +1,6 @@
 package com.cytech.marketplace.servlet;
 
-import com.cytech.marketplace.dao.ArticlesDAOold;
+import com.cytech.marketplace.dao.ArticlesDAO;
 import com.cytech.marketplace.entity.Articles;
 import com.cytech.marketplace.utils.CartUtil;
 import jakarta.servlet.ServletException;
@@ -24,14 +24,20 @@ public class AddToCartServlet extends HttpServlet {
         String productQty = req.getParameter("productQty");
         Map<Articles, Integer> cart = CartUtil.getCart(req);
 
-        UUID productIdUUID = UUID.fromString(productId);
+        long productIdLong = Long.parseLong(productId);
         int qty = Integer.parseInt(productQty);
-        Articles product = ArticlesDAOold.getArticle(productIdUUID);
+        ArticlesDAO articlesDAO = new ArticlesDAO();
+        Articles product = null;
+        try {
+            product = articlesDAO.getArticle(productIdLong);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
         if (cart.containsKey(product)) {
             int qtyInCart = cart.get(product);
             int toPutInCart = qty + qtyInCart;
-            if (product.getStock().compareTo(BigInteger.valueOf(toPutInCart)) < 0){
-                int correctedQty = abs(qtyInCart - product.getStock().intValue());
+            if (product.getStock() < 0){
+                int correctedQty = abs(qtyInCart - product.getStock());
                 CartUtil.addArticleToCart(req, product, correctedQty);
             } else {
             CartUtil.addArticleToCart(req, product, qty);

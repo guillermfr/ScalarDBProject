@@ -1,5 +1,5 @@
 <%@ page import="com.cytech.marketplace.entity.Articles" %>
-<%@ page import="com.cytech.marketplace.dao.ArticlesDAOold" %>
+<%@ page import="com.cytech.marketplace.dao.ArticlesDAO" %>
 <%@ page import="java.util.List" %>
 <%@ page import="com.cytech.marketplace.dao.ArticlesDAO" %>
 <%@ page import="com.scalar.db.exception.transaction.TransactionException" %>
@@ -26,8 +26,8 @@
     ArticlesDAO articlesDAO = new ArticlesDAO();
     try {
         articlesDAO.loadInitialData();
-        String test = articlesDAO.getArticleInfo(1);
-        System.out.println(test);
+        Articles test = articlesDAO.getArticle(1);
+        System.out.println(test.toString());
     } catch (Exception e) {
         throw new RuntimeException(e);
     }

@@ -1,6 +1,6 @@
 package com.cytech.marketplace.servlet;
 
-import com.cytech.marketplace.dao.ArticlesDAOold;
+import com.cytech.marketplace.dao.ArticlesDAO;
 import com.cytech.marketplace.entity.Articles;
 import com.cytech.marketplace.utils.CheckIntFloat;
 import jakarta.servlet.ServletException;
@@ -45,8 +45,13 @@ public class AddProductServlet extends HttpServlet {
 
         if(correctValues) {
             // Ajouter produit à la bdd
-            Articles newProduct = new Articles(nom, new BigDecimal(prix), new BigInteger(stock), image);
-            ArticlesDAOold.addArticle(newProduct);
+            ArticlesDAO articlesDAO = new ArticlesDAO();
+            // Articles newProduct = new Articles(nom, new BigDecimal(prix), new BigInteger(stock), image);
+            try {
+                articlesDAO.addArticle(nom, Float.parseFloat(prix), Integer.parseInt(stock), image);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
             req.getRequestDispatcher("/WEB-INF/view/productManagement.jsp").forward(req, resp);
         }
         else {

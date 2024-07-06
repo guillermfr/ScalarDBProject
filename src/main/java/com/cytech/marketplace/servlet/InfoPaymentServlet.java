@@ -1,11 +1,12 @@
 package com.cytech.marketplace.servlet;
 
-import com.cytech.marketplace.dao.ArticlesDAOold;
+import com.cytech.marketplace.dao.ArticlesDAO;
 import com.cytech.marketplace.entity.Articles;
 import com.cytech.marketplace.entity.Users;
 import com.cytech.marketplace.utils.CartUtil;
 import com.cytech.marketplace.utils.EmailUtil;
 import com.cytech.marketplace.utils.UsersUtil;
+import com.scalar.db.exception.transaction.AbortException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -81,23 +82,26 @@ public class InfoPaymentServlet extends HttpServlet {
 
             // Pour chaque article, on modifie son stock
             for (Map.Entry<Articles, Integer> article : cart.entrySet()) {
+                ArticlesDAO articlesDAO = new ArticlesDAO();
                 Articles modifiedArticle = article.getKey();
-                modifiedArticle.setStock(BigInteger.valueOf(modifiedArticle.getStock().intValue() - article.getValue()));
-                ArticlesDAOold.updateArticle(modifiedArticle);
+                modifiedArticle.setStock(modifiedArticle.getStock() - article.getValue());
+                try {
+                    articlesDAO.updateArticle(modifiedArticle);
+                } catch (AbortException e) {
+                    throw new RuntimeException(e);
+                }
             }
 
             BigDecimal total = (BigDecimal) req.getSession().getAttribute("total");
-            BigInteger loyaltyPoints = new BigInteger(String.valueOf(0));
+            int loyaltyPoints = 0;
             if (usePoints) {
                 loyaltyPoints = user.getLoyaltyPoints();
                 total = total.subtract(new BigDecimal(user.getLoyaltyPoints()).divide(new BigDecimal(100)));
-                UsersUtil.removeLoyaltyPoints(user, user.getLoyaltyPoints().subtract(total.toBigInteger()));
+                UsersUtil.removeLoyaltyPoints(user, user.getLoyaltyPoints());
             } else {
                 UsersUtil.addLoyaltyPoints(user, total.intValue());
             }
 
-            // Envoie de l'email récapitulatif
-            EmailUtil.sendRecapMail(user, cart, personnalInformation, total, loyaltyPoints);
 
             // Supprimer toutes les variables de session qui ne sont plus utiles
             CartUtil.emptyCart(req);
