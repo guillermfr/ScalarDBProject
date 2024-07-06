@@ -49,18 +49,12 @@ public class ArticlesDAO {
             String image
     ) throws Exception {
 
+        Articles article = getArticle(name);
         DistributedTransaction transaction = null;
 
         try {
             transaction = manager.start();
-            Optional<Result> article =
-                    transaction.get(
-                            Get.newBuilder()
-                                    .namespace("marketplace")
-                                    .table("articles")
-                                    .partitionKey(Key.ofBigInt("id", id))
-                                    .build());
-            if (!article.isPresent()) {
+            if (article == null) {
                 transaction.put(
                         Put.newBuilder()
                                 .namespace("marketplace")
@@ -72,6 +66,7 @@ public class ArticlesDAO {
                                 .textValue("image", image)
                                 .build());
             }
+            transaction.commit();
         } catch (Exception e) {
             if (transaction != null) {
                 transaction.abort();
@@ -171,7 +166,7 @@ public class ArticlesDAO {
         }
     }
 
-    public Articles getArticle(String name) throws Exception {
+public Articles getArticle(String name) throws Exception {
         DistributedTransaction transaction = null;
         try {
             transaction = manager.start();
@@ -217,7 +212,8 @@ public class ArticlesDAO {
                         result.getText("name"),
                         result.getFloat("price"),
                         result.getInt("stock"),
-                        result.getText("image")));
+                        result.getText("image"),
+                        result.getBigInt("id")));
             }
 
             transaction.commit();
