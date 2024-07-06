@@ -2,6 +2,7 @@ package com.cytech.marketplace.servlet;
 
 import com.cytech.marketplace.dao.UsersDAO;
 import com.cytech.marketplace.entity.Users;
+import com.cytech.marketplace.utils.CreateIDUtil;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -39,6 +40,7 @@ public class SignupServlet extends HttpServlet {
         users.setPassword(password);
         users.setAdmin(false);
         users.setLoyaltyPoints(0);
+        users.setId(CreateIDUtil.createID());
 
         try {
             usersDAO.addUser(users);
