@@ -7,31 +7,14 @@ import java.math.BigInteger;
 import java.util.Objects;
 import java.util.UUID;
 
-@Entity
-@Table(name = "\"Users\"", schema = "public")
 public class Users {
-    @Basic
-    @Column(name = "email")
     private String email;
-    @Basic
-    @Column(name = "password")
     private String password;
-    @Basic
-    @Column(name = "name")
     private String name;
-    @Basic
-    @Column(name = "is_admin")
     private Boolean isAdmin;
-    @Basic
-    @Column(name = "loyalty_points")
-    private BigInteger loyaltyPoints;
-    @Basic
-    @Column(name = "cart")
+    private int loyaltyPoints;
     private String cart;
-    @GeneratedValue(strategy = GenerationType.UUID)
-    @Id
-    @Column(name = "id")
-    private UUID id;
+    private int id;
 
     public String getEmail() {
         return email;
@@ -65,11 +48,11 @@ public class Users {
         isAdmin = admin;
     }
 
-    public BigInteger getLoyaltyPoints() {
+    public int getLoyaltyPoints() {
         return loyaltyPoints;
     }
 
-    public void setLoyaltyPoints(BigInteger loyaltyPoints) {
+    public void setLoyaltyPoints(int loyaltyPoints) {
         this.loyaltyPoints = loyaltyPoints;
     }
 
@@ -81,11 +64,11 @@ public class Users {
         this.cart = cart;
     }
 
-    public UUID getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -96,18 +79,6 @@ public class Users {
 
         Users users = (Users) o;
 
-        return id.equals(users.id);
-    }
-
-    @Override
-    public int hashCode() {
-        int result = email != null ? email.hashCode() : 0;
-        result = 31 * result + (password != null ? password.hashCode() : 0);
-        result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + (isAdmin != null ? isAdmin.hashCode() : 0);
-        result = 31 * result + (loyaltyPoints != null ? loyaltyPoints.hashCode() : 0);
-        result = 31 * result + (cart != null ? cart.hashCode() : 0);
-        result = 31 * result + (id != null ? id.hashCode() : 0);
-        return result;
+        return id == users.id;
     }
 }

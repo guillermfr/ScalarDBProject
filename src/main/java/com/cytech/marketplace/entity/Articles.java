@@ -1,33 +1,13 @@
 package com.cytech.marketplace.entity;
 
-import jakarta.persistence.*;
-
-import java.math.BigDecimal;
-import java.math.BigInteger;
-import java.util.Objects;
-import java.util.UUID;
-
-@Entity
-@Table(name = "\"Articles\"", schema = "public")
 public class Articles {
-    @Basic
-    @Column(name = "name")
     private String name;
-    @Basic
-    @Column(name = "price")
-    private BigDecimal price;
-    @Basic
-    @Column(name = "stock")
-    private BigInteger stock;
-    @Basic
-    @Column(name = "image")
+    private float price;
+    private int stock;
     private String image;
-    @GeneratedValue(strategy = GenerationType.UUID)
-    @Id
-    @Column(name = "id")
-    private UUID id;
+    private int id;
 
-    public Articles(String nom, BigDecimal prix, BigInteger stock, String image) {
+    public Articles(String nom, float prix, int stock, String image) {
         this.name = nom;
         this.price = prix;
         this.stock = stock;
@@ -44,19 +24,19 @@ public class Articles {
         this.name = name;
     }
 
-    public BigDecimal getPrice() {
+    public float getPrice() {
         return price;
     }
 
-    public void setPrice(BigDecimal price) {
+    public void setPrice(float price) {
         this.price = price;
     }
 
-    public BigInteger getStock() {
+    public int getStock() {
         return stock;
     }
 
-    public void setStock(BigInteger stock) {
+    public void setStock(int stock) {
         this.stock = stock;
     }
 
@@ -68,11 +48,11 @@ public class Articles {
         this.image = image;
     }
 
-    public UUID getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -83,16 +63,6 @@ public class Articles {
 
         Articles articles = (Articles) o;
 
-        return id.equals(articles.id);
-    }
-
-    @Override
-    public int hashCode() {
-        int result = name != null ? name.hashCode() : 0;
-        result = 31 * result + (price != null ? price.hashCode() : 0);
-        result = 31 * result + (stock != null ? stock.hashCode() : 0);
-        result = 31 * result + (image != null ? image.hashCode() : 0);
-        result = 31 * result + (id != null ? id.hashCode() : 0);
-        return result;
+        return id == articles.id;
     }
 }
