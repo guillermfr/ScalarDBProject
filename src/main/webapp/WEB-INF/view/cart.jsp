@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" import="com.cytech.marketplace.dao.ArticlesDAOold" %>
 <html>
 <head>
-    <title>Panier</title>
+    <title>Cart</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         function calculateTotal() {
@@ -23,7 +23,7 @@
 
 <div class="flex flex-row justify-center pt-8">
     <div class="w-5/6 p-8">
-        <h2 class="text-2xl font-semibold mb-2">Récapitulatif de vos achats</h2>
+        <h2 class="text-2xl font-semibold mb-2">Sumary of your purchases</h2>
         <c:if test="${not empty error}">
             <div class="mb-4 rounded-md bg-red-400 p-2.5 text-center text-sm font-medium text-white">${error}</div>
         </c:if>
@@ -31,7 +31,7 @@
             <div class="mb-8 flex w-full flex-col">
                 <c:choose>
                 <c:when test="${empty sessionScope.cart || sessionScope.cart.size() == 0}">
-                    <div class="flex flex-col justify-center text-lg font-semibold">Votre panier est vide</div>
+                    <div class="flex flex-col justify-center text-lg font-semibold">Your cart is empty</div>
                 </c:when>
                 <c:otherwise>
                     <c:forEach items="${sessionScope.cart}" var="item">
@@ -56,11 +56,11 @@
                                         onkeyup="
                                             if(this.value > ${ArticlesDAO.getArticle(item.key.getId()).getStock()}) this.value = ${ArticlesDAO.getArticle(item.key.getId()).getStock()};
                                             if(this.value < 0) this.value = 0;
-                                            document.getElementById('${item.key.getId()}-price').innerHTML = (${ArticlesDAO.getArticle(item.key.getId()).getPrice()} * this.value).toFixed(2) + ' €';
+                                            document.getElementById('${item.key.getId()}-price').innerHTML = (${ArticlesDAO.getArticle(item.key.getId()).getPrice()} * this.value).toFixed(2) + ' ¥';
                                             calculateTotal();
                                         "
                                         onchange="
-                                            document.getElementById('${item.key.getId()}-price').innerHTML = (${ArticlesDAO.getArticle(item.key.getId()).getPrice()} * this.value).toFixed(2) + ' €';
+                                            document.getElementById('${item.key.getId()}-price').innerHTML = (${ArticlesDAO.getArticle(item.key.getId()).getPrice()} * this.value).toFixed(2) + ' ¥';
                                             calculateTotal();
                                         "
                                     />
@@ -78,7 +78,7 @@
                         <span class="text-right text-xl" id="total"></span>
                     </div>
                     <div class="flex flex-col justify-center">
-                        <button type="submit" class="text-md rounded-full bg-blue-400 px-5 py-3 text-center font-medium text-white hover:bg-blue-500 focus:outline-none">Procéder au paiement</button>
+                        <button type="submit" class="text-md rounded-full bg-blue-400 px-5 py-3 text-center font-medium text-white hover:bg-blue-500 focus:outline-none">Proceed to payment</button>
                     </div>
                 </div>
             </c:if>

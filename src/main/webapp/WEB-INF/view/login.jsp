@@ -25,14 +25,14 @@
                         <input name="email" id="email" type="email" <c:if test="${not empty error}">value="${email}"</c:if> class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-none" required />
                     </div>
                     <div class="mb-6">
-                        <label for="password" class="mb-2 block text-sm font-medium text-gray-900">Mot de passe</label>
+                        <label for="password" class="mb-2 block text-sm font-medium text-gray-900">Password</label>
                         <input name="password" id="password" type="password" class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-none" required />
                     </div>
-                    <button type="submit" class="w-full rounded-full bg-blue-400 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-blue-500 focus:outline-none">Se connecter</button>
+                    <button type="submit" class="w-full rounded-full bg-blue-400 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-blue-500 focus:outline-none">Log in</button>
                 </form>
                 <form action="signup" method="POST">
-                    <span class="mb-4 block text-sm font-medium text-gray-900">Pas encore inscrit ?</span>
-                    <button type="submit" class="w-full rounded-full bg-blue-400 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-blue-500 focus:outline-none">S'inscrire</button>
+                    <span class="mb-4 block text-sm font-medium text-gray-900">New member ?</span>
+                    <button type="submit" class="w-full rounded-full bg-blue-400 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-blue-500 focus:outline-none">Sign up</button>
                 </form>
             </div>
         </div>

@@ -60,8 +60,8 @@
     <div class="flex flex-col pt-8 justify-center">
         <div class="flex justify-center text-center">
             <div class="gradient-radial bg-contain bg-center w-5/6 p-8">
-                <h1 class="text-3xl font-semibold mb-2 text-white"> Bienvenue chez WA'ER</h1>
-                <p class="text-l font-semibold text-white"> Redécouvrez le goût de l'eau avec notre best sell'er</p>
+                <h1 class="text-3xl font-semibold mb-2 text-white"> Welcome to WA'ER</h1>
+                <p class="text-l font-semibold text-white"> Rediscover the taste of water with our best sell'er</p>
                 <div class="flex justify-center">
 <%--                    <a href="productPage?id=<%= bestSeller.getId() %>">--%>
 <%--                        <div class="bg-white float-left   border p-4 m-4 cursor-pointer">--%>
@@ -76,7 +76,7 @@
             </div>
         </div >
         <div class="text-center">
-            <div class="text-xl pt-4 pb-1"> Plus de produits</div>
+            <div class="text-xl pt-4 pb-1"> More products</div>
             <div class="flex justify-center">
 <%--                <%--%>
 <%--                    for (int i=0; i<5; i++) {--%>
@@ -96,7 +96,7 @@
             <div class="p-2">
                 <form action="catalogue" method="get">
                     <button class="rounded-full bg-blue-400 px-4 py-3 text-white hover:bg-blue-500 focus:outline-none" type="submit">
-                        Découvrir notre catalogue complet
+                        Discover our complete catalogue
                     </button>
                 </form>
             </div>
