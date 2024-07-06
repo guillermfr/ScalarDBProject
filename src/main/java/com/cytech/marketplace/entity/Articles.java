@@ -14,6 +14,14 @@ public class Articles {
         this.image = image;
     }
 
+    public Articles(String nom, float prix, int stock, String image, long id) {
+        this.name = nom;
+        this.price = prix;
+        this.stock = stock;
+        this.image = image;
+        this.id = id;
+    }
+
     public Articles() {}
 
     public String getName() {
