@@ -1,10 +1,18 @@
 <%@ page import="com.cytech.marketplace.entity.Articles" %>
+<%@ page import="com.cytech.marketplace.dao.ArticlesDAO" %>
 <%@ page import="com.cytech.marketplace.utils.CartUtil" %>
 <%@ page import="java.math.BigInteger" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <%
-    Articles product = ((Articles)request.getAttribute("product"));
+    long productId = Long.parseLong(request.getParameter("id"));
+    ArticlesDAO articlesDAO = new ArticlesDAO();
+    Articles product = null;
+    try {
+        product = articlesDAO.getArticle(productId);
+    } catch (Exception e) {
+        throw new RuntimeException(e);
+    }
     int inCartQty = ((Integer)request.getAttribute("qty"));
 %>
 
@@ -52,8 +60,8 @@
                                             type="number"
                                             step="1"
                                             min="1"
-                                            max="<%= product.getStock().subtract(BigInteger.valueOf(inCartQty))%>"
-                                            onkeyup="if(this.value > <%= product.getStock().subtract(BigInteger.valueOf(inCartQty)) %>) this.value = <%= product.getStock().subtract(BigInteger.valueOf(inCartQty)).compareTo(BigInteger.ZERO) == 1 ? product.getStock().subtract(BigInteger.valueOf(inCartQty)) : 0 %>; if(this.value < 1) this.value = 1;"
+                                            max="<%= product.getStock()%>"
+                                            onkeyup="if(this.value > <%= product.getStock() %>) this.value = <%= product.getStock() == 1 ? product.getStock() : 0 %>; if(this.value < 1) this.value = 1;"
                                     />
                                 </c:otherwise>
                             </c:choose>
