@@ -1,6 +1,6 @@
 package com.cytech.marketplace.utils;
 
-import com.cytech.marketplace.dao.UsersDAO;
+import com.cytech.marketplace.dao.UsersDAOold;
 import com.cytech.marketplace.entity.Articles;
 import com.cytech.marketplace.entity.Users;
 
@@ -13,7 +13,7 @@ import static com.cytech.marketplace.utils.CartUtil.stringToCart;
 public class UsersUtil {
     public static void setCart(Users user, Map<Articles, Integer> cart) {
         user.setCart(cart == null ? null : cartToString(cart));
-        UsersDAO.updateUser(user);
+        UsersDAOold.updateUser(user);
     }
 
     public static Map<Articles, Integer> getCart(Users user) {
@@ -42,11 +42,11 @@ public class UsersUtil {
 
     public static void addLoyaltyPoints(Users user, int points) {
         user.setLoyaltyPoints(user.getLoyaltyPoints().add(BigInteger.valueOf(points)));
-        UsersDAO.updateUser(user);
+        UsersDAOold.updateUser(user);
     }
 
     public static void removeLoyaltyPoints(Users user, BigInteger points) {
         user.setLoyaltyPoints(user.getLoyaltyPoints().subtract(points));
-        UsersDAO.updateUser(user);
+        UsersDAOold.updateUser(user);
     }
 }
