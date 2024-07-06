@@ -3,7 +3,7 @@ package com.cytech.marketplace.dao;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 
-public class PersistenceUtil {
+public class PersistenceUtilold {
     private static final EntityManagerFactory emf;
 
     static {

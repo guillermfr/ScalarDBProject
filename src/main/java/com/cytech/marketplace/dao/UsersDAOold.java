@@ -7,9 +7,9 @@ import org.springframework.security.crypto.bcrypt.BCrypt;
 
 import java.util.*;
 
-public class UsersDAO {
+public class UsersDAOold {
     public static void addUser(Users user) {
-        EntityManager em = PersistenceUtil.getEmf().createEntityManager();
+        EntityManager em = PersistenceUtilold.getEmf().createEntityManager();
         EntityTransaction transaction = em.getTransaction();
 
         transaction.begin();
@@ -19,7 +19,7 @@ public class UsersDAO {
     }
 
     public static void updateUser(Users user) {
-        EntityManager em = PersistenceUtil.getEmf().createEntityManager();
+        EntityManager em = PersistenceUtilold.getEmf().createEntityManager();
         EntityTransaction transaction = em.getTransaction();
 
         transaction.begin();
@@ -29,7 +29,7 @@ public class UsersDAO {
     }
 
     public static void deleteUser(Users user) {
-        EntityManager em = PersistenceUtil.getEmf().createEntityManager();
+        EntityManager em = PersistenceUtilold.getEmf().createEntityManager();
         EntityTransaction transaction = em.getTransaction();
 
         transaction.begin();
@@ -47,14 +47,14 @@ public class UsersDAO {
     }
 
     public static Users getUser(UUID uuid) {
-        EntityManager em = PersistenceUtil.getEmf().createEntityManager();
+        EntityManager em = PersistenceUtilold.getEmf().createEntityManager();
         Users user = em.find(Users.class, uuid);
         em.close();
         return user;
     }
 
     public static Users getUser(String email) {
-        EntityManager em = PersistenceUtil.getEmf().createEntityManager();
+        EntityManager em = PersistenceUtilold.getEmf().createEntityManager();
         List<Users> users = em.createQuery("FROM Users WHERE email = :email", Users.class).setParameter("email", email).getResultList();
         if (users.isEmpty()) {
             return null;
@@ -66,7 +66,7 @@ public class UsersDAO {
     }
 
     public static List<Users> getAllUsers() {
-        EntityManager em = PersistenceUtil.getEmf().createEntityManager();
+        EntityManager em = PersistenceUtilold.getEmf().createEntityManager();
         List<Users> users = em.createQuery("FROM Users", Users.class).getResultList();
         if (users.isEmpty()) {
             return null;
@@ -77,7 +77,7 @@ public class UsersDAO {
     }
 
     public static List<Users> getUsersByName(String name) {
-        EntityManager em = PersistenceUtil.getEmf().createEntityManager();
+        EntityManager em = PersistenceUtilold.getEmf().createEntityManager();
         List<Users> users = em.createQuery("FROM Users WHERE name = :name", Users.class).setParameter("name", name).getResultList();
         em.close();
         return users;
