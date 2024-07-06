@@ -1,7 +1,8 @@
 package com.cytech.marketplace.servlet;
 
-import com.cytech.marketplace.dao.UsersDAOold;
+import com.cytech.marketplace.dao.UsersDAO;
 import com.cytech.marketplace.entity.Users;
+import com.scalar.db.exception.transaction.TransactionException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -9,18 +10,18 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
-import java.math.BigInteger;
 import java.util.Set;
-import java.util.UUID;
 
 @WebServlet(name = "updateFidelityPointsManagementServlet", value = "/updateFidelityPointsManagement-servlet")
 public class UpdateFidelityPointsManagementServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        UsersDAO usersDAO = new UsersDAO();
+
         Set<String> parameterNames = req.getParameterMap().keySet();
 
         for (String parameterName : parameterNames) {
-            UUID userID = UUID.fromString(parameterName);
+            long userID = Long.parseLong(parameterName);
             String newLoyaltyPointsString = req.getParameter(parameterName);
 
             int newLoyaltyPointsValue;
@@ -31,9 +32,14 @@ public class UpdateFidelityPointsManagementServlet extends HttpServlet {
                 newLoyaltyPointsValue = 0;
             }
 
-            Users user = UsersDAOold.getUser(userID);
-            user.setLoyaltyPoints(BigInteger.valueOf(newLoyaltyPointsValue));
-            UsersDAOold.updateUser(user);
+            Users user = usersDAO.getUser(userID);
+            user.setLoyaltyPoints(newLoyaltyPointsValue);
+
+            try {
+                usersDAO.updateUser(user);
+            } catch (TransactionException e) {
+                throw new RuntimeException(e);
+            }
         }
 
         req.getRequestDispatcher("/WEB-INF/view/fidelityPointsManagement.jsp").forward(req, resp);

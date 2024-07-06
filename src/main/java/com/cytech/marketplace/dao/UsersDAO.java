@@ -31,7 +31,7 @@ public class UsersDAO {
         manager.close();
     }
 
-    private void addUser(Users user) throws Exception {
+    public void addUser(Users user) throws Exception {
         DistributedTransaction transaction = null;
         try {
             transaction = manager.start();

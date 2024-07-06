@@ -11,6 +11,10 @@ public class Users {
     private String cart;
     private long id;
 
+    public Users() {
+
+    }
+
     // Constructor when creating a user after fetching it from database (NOT for creating a new user - pw is not hashed)
     public Users(String email, String name, String password, Boolean isAdmin, int loyaltyPoints, String cart, long id) {
         this.email = email;
