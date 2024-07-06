@@ -1,4 +1,4 @@
-<%@ page import="com.cytech.marketplace.dao.ArticlesDAOold" %>
+<%@ page import="com.cytech.marketplace.dao.ArticlesDAO" %>
 <%@ page import="com.cytech.marketplace.entity.Articles" %>
 <%@ page import="java.util.List" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -10,7 +10,13 @@
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
-<% List<Articles> articles = ArticlesDAOold.getArticles(); %>
+<%  ArticlesDAO articlesDAO = new ArticlesDAO();
+    List<Articles> articles = null;
+    try {
+        articles = articlesDAO.getAllArticles();
+    } catch (Exception e) {
+        throw new RuntimeException(e);
+    } %>
 
 <body>
     <%@ include file="components/header.jsp" %>

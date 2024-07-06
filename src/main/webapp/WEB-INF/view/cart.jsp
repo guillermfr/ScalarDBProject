@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" import="com.cytech.marketplace.dao.ArticlesDAOold" %>
+<%@ page contentType="text/html;charset=UTF-8" import="com.cytech.marketplace.dao.ArticlesDAO" %>
 <html>
 <head>
     <title>Cart</title>
@@ -20,7 +20,7 @@
 </head>
 <body>
 <%@ include file="components/header.jsp" %>
-
+<%  ArticlesDAO articlesDAO = new ArticlesDAO(); %>
 <div class="flex flex-row justify-center pt-8">
     <div class="w-5/6 p-8">
         <h2 class="text-2xl font-semibold mb-2">Sumary of your purchases</h2>
@@ -34,7 +34,8 @@
                     <div class="flex flex-col justify-center text-lg font-semibold">Your cart is empty</div>
                 </c:when>
                 <c:otherwise>
-                    <c:forEach items="${sessionScope.cart}" var="item">
+                    <c:forEach items="${sessionScope.cart}" var="item"><jsp:useBean id="articlesDAO" scope="request" type=""/>
+
                         <div class="flex flex-row justify-between mb-2 shadow-md p-4 rounded-md">
                             <div class="flex flex-row">
                                 <img class="mr-8 max-h-[100px]" src="${item.key.getImage()}" alt="${item.key.getName()}" />
@@ -52,15 +53,15 @@
                                         type="number"
                                         step="1"
                                         min="0"
-                                        max="${ArticlesDAO.getArticle(item.key.getId()).getStock()}"
+                                        max="${articlesDAO.getArticle(item.key.getId()).getStock()}"
                                         onkeyup="
-                                            if(this.value > ${ArticlesDAO.getArticle(item.key.getId()).getStock()}) this.value = ${ArticlesDAO.getArticle(item.key.getId()).getStock()};
+                                            if(this.value > ${articlesDAO.getArticle(item.key.getId()).getStock()}) this.value = ${articlesDAO.getArticle(item.key.getId()).getStock()};
                                             if(this.value < 0) this.value = 0;
-                                            document.getElementById('${item.key.getId()}-price').innerHTML = (${ArticlesDAO.getArticle(item.key.getId()).getPrice()} * this.value).toFixed(2) + ' ¥';
+                                            document.getElementById('${item.key.getId()}-price').innerHTML = (${articlesDAO.getArticle(item.key.getId()).getPrice()} * this.value).toFixed(2) + ' ¥';
                                             calculateTotal();
                                         "
                                         onchange="
-                                            document.getElementById('${item.key.getId()}-price').innerHTML = (${ArticlesDAO.getArticle(item.key.getId()).getPrice()} * this.value).toFixed(2) + ' ¥';
+                                            document.getElementById('${item.key.getId()}-price').innerHTML = (${articlesDAO.getArticle(item.key.getId()).getPrice()} * this.value).toFixed(2) + ' ¥';
                                             calculateTotal();
                                         "
                                     />
