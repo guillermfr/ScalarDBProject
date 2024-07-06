@@ -78,7 +78,7 @@ public class UsersDAO {
                     .textValue("email", user.getEmail())
                     .textValue("name", user.getName())
                     .textValue("password", user.getPassword())
-                    .booleanValue("isAdmin", user.getAdmin())
+                    .booleanValue("is_admin", user.getAdmin())
                     .intValue("loyalty_points", user.getLoyaltyPoints())
                     .textValue("cart", user.getCart())
                     .build()
@@ -141,7 +141,7 @@ public class UsersDAO {
                 user.get().getText("email"),
                 user.get().getText("name"),
                 user.get().getText("password"),
-                user.get().getBoolean("isAdmin"),
+                user.get().getBoolean("is_admin"),
                 user.get().getInt("loyalty_points"),
                 user.get().getText("cart"),
                 user.get().getBigInt("id")
@@ -184,7 +184,7 @@ public class UsersDAO {
                     result.getText("email"),
                     result.getText("name"),
                     result.getText("password"),
-                    result.getBoolean("isAdmin"),
+                    result.getBoolean("is_admin"),
                     result.getInt("loyalty_points"),
                     result.getText("cart"),
                     result.getBigInt("id")
