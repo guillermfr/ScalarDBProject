@@ -1,6 +1,6 @@
 package com.cytech.marketplace.servlet;
 
-import com.cytech.marketplace.dao.ArticlesDAO;
+import com.cytech.marketplace.dao.ArticlesDAOold;
 import com.cytech.marketplace.entity.Articles;
 import com.cytech.marketplace.utils.CartUtil;
 import jakarta.servlet.ServletException;
@@ -26,7 +26,7 @@ public class AddToCartServlet extends HttpServlet {
 
         UUID productIdUUID = UUID.fromString(productId);
         int qty = Integer.parseInt(productQty);
-        Articles product = ArticlesDAO.getArticle(productIdUUID);
+        Articles product = ArticlesDAOold.getArticle(productIdUUID);
         if (cart.containsKey(product)) {
             int qtyInCart = cart.get(product);
             int toPutInCart = qty + qtyInCart;

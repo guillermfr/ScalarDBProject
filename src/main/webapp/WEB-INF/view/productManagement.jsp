@@ -1,6 +1,6 @@
 <%@ page import="java.util.List" %>
 <%@ page import="com.cytech.marketplace.entity.Articles" %>
-<%@ page import="com.cytech.marketplace.dao.ArticlesDAO" %>
+<%@ page import="com.cytech.marketplace.dao.ArticlesDAOold" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -8,7 +8,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <%
-    List<Articles> articles = ArticlesDAO.getArticles();
+    List<Articles> articles = ArticlesDAOold.getArticles();
 %>
 <body>
 

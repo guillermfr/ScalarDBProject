@@ -1,6 +1,6 @@
 package com.cytech.marketplace.servlet;
 
-import com.cytech.marketplace.dao.ArticlesDAO;
+import com.cytech.marketplace.dao.ArticlesDAOold;
 import com.cytech.marketplace.entity.Articles;
 import com.cytech.marketplace.entity.Users;
 import com.cytech.marketplace.utils.CartUtil;
@@ -12,14 +12,10 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-import javax.mail.Authenticator;
-import javax.mail.PasswordAuthentication;
-import javax.mail.Session;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Map;
-import java.util.Properties;
 
 @WebServlet(name = "infoPaymentServlet", value = "/infoPayment-servlet")
 public class InfoPaymentServlet extends HttpServlet {
@@ -87,7 +83,7 @@ public class InfoPaymentServlet extends HttpServlet {
             for (Map.Entry<Articles, Integer> article : cart.entrySet()) {
                 Articles modifiedArticle = article.getKey();
                 modifiedArticle.setStock(BigInteger.valueOf(modifiedArticle.getStock().intValue() - article.getValue()));
-                ArticlesDAO.updateArticle(modifiedArticle);
+                ArticlesDAOold.updateArticle(modifiedArticle);
             }
 
             BigDecimal total = (BigDecimal) req.getSession().getAttribute("total");

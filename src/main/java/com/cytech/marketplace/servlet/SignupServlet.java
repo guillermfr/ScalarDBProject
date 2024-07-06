@@ -1,6 +1,6 @@
 package com.cytech.marketplace.servlet;
 
-import com.cytech.marketplace.dao.UsersDAO;
+import com.cytech.marketplace.dao.UsersDAOold;
 import com.cytech.marketplace.entity.Users;
 import com.cytech.marketplace.utils.EmailUtil;
 import jakarta.servlet.ServletException;
@@ -30,7 +30,7 @@ public class SignupServlet extends HttpServlet {
             return;
         }
 
-        if (UsersDAO.getUser(email) != null) {
+        if (UsersDAOold.getUser(email) != null) {
             req.setAttribute("error", "Un compte avec cet email existe déjà.");
             req.getRequestDispatcher("/WEB-INF/view/signup.jsp").forward(req, resp);
             return;
@@ -42,7 +42,7 @@ public class SignupServlet extends HttpServlet {
         users.setPassword(password);
         users.setAdmin(false);
         users.setLoyaltyPoints(BigInteger.ZERO);
-        UsersDAO.addUser(users);
+        UsersDAOold.addUser(users);
 
         final String from = "marketplace.root@gmail.com";
         final String pw = "aibygnesrjnpgnbj";
@@ -67,7 +67,7 @@ public class SignupServlet extends HttpServlet {
                 "Cordialement,\n" +
                 "L'équipe de WA'ER");
 
-        req.getSession().setAttribute("user", UsersDAO.getUser(email));
+        req.getSession().setAttribute("user", UsersDAOold.getUser(email));
         resp.sendRedirect(getServletContext().getContextPath() + "/home");
     }
 }

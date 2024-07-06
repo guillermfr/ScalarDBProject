@@ -1,6 +1,6 @@
 package com.cytech.marketplace.servlet;
 
-import com.cytech.marketplace.dao.ArticlesDAO;
+import com.cytech.marketplace.dao.ArticlesDAOold;
 import com.cytech.marketplace.entity.Articles;
 import com.cytech.marketplace.entity.Users;
 import com.cytech.marketplace.utils.CartUtil;
@@ -27,7 +27,7 @@ public class CheckStockPostCartServlet extends HttpServlet {
         for (String parameterName : parameterNames) {
             String value = req.getParameter(parameterName);
             String name = parameterName.substring(0, parameterName.indexOf("-input"));
-            Articles article = ArticlesDAO.getArticle(UUID.fromString(name));
+            Articles article = ArticlesDAOold.getArticle(UUID.fromString(name));
 
             if (Integer.parseInt(value) == 0) {
                 cart.remove(article);
@@ -42,7 +42,7 @@ public class CheckStockPostCartServlet extends HttpServlet {
                 continue;
             }
 
-            if (!ArticlesDAO.checkStock(UUID.fromString(name), Integer.parseInt(value))) {
+            if (!ArticlesDAOold.checkStock(UUID.fromString(name), Integer.parseInt(value))) {
                 req.setAttribute("error", "Une erreur de stock est survenue. Veuillez réessayer.");
                 req.getRequestDispatcher("/WEB-INF/view/cart.jsp").forward(req, resp);
                 return;

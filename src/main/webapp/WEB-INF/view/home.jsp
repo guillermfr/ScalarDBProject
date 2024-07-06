@@ -1,11 +1,12 @@
 <%@ page import="com.cytech.marketplace.entity.Articles" %>
-<%@ page import="com.cytech.marketplace.dao.ArticlesDAO" %>
+<%@ page import="com.cytech.marketplace.dao.ArticlesDAOold" %>
 <%@ page import="java.util.List" %>
-<%@ page import="com.cytech.marketplace.dao.ScalarDBUtil" %>
+<%@ page import="com.cytech.marketplace.dao.ArticlesDAO" %>
 <%@ page import="com.scalar.db.exception.transaction.TransactionException" %>
 <%@ page import="com.scalar.db.io.Key" %>
 <%@ page import="java.util.Optional" %>
 <%@ page import="com.scalar.db.api.*" %>
+<%@ page import="com.cytech.marketplace.dao.ArticlesDAO" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -22,10 +23,10 @@
 <%--<% List<Articles> articles = ArticlesDAO.getArticles(); %>--%>
 
 <%
-    ScalarDBUtil scalarDBUtil = new ScalarDBUtil();
+    ArticlesDAO articlesDAO = new ArticlesDAO();
     try {
-        scalarDBUtil.loadInitialData();
-        String test = scalarDBUtil.getArticleInfo(1);
+        articlesDAO.loadInitialData();
+        String test = articlesDAO.getArticleInfo(1);
         System.out.println(test);
     } catch (Exception e) {
         throw new RuntimeException(e);

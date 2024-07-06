@@ -1,6 +1,6 @@
 package com.cytech.marketplace.servlet;
 
-import com.cytech.marketplace.dao.UsersDAO;
+import com.cytech.marketplace.dao.UsersDAOold;
 import com.cytech.marketplace.entity.Users;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -31,9 +31,9 @@ public class UpdateFidelityPointsManagementServlet extends HttpServlet {
                 newLoyaltyPointsValue = 0;
             }
 
-            Users user = UsersDAO.getUser(userID);
+            Users user = UsersDAOold.getUser(userID);
             user.setLoyaltyPoints(BigInteger.valueOf(newLoyaltyPointsValue));
-            UsersDAO.updateUser(user);
+            UsersDAOold.updateUser(user);
         }
 
         req.getRequestDispatcher("/WEB-INF/view/fidelityPointsManagement.jsp").forward(req, resp);

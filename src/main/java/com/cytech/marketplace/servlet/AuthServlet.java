@@ -1,6 +1,6 @@
 package com.cytech.marketplace.servlet;
 
-import com.cytech.marketplace.dao.UsersDAO;
+import com.cytech.marketplace.dao.UsersDAOold;
 import com.cytech.marketplace.entity.Articles;
 import com.cytech.marketplace.entity.Users;
 import com.cytech.marketplace.utils.CartUtil;
@@ -18,8 +18,8 @@ import java.util.Map;
 public class AuthServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        if (UsersDAO.login(req.getParameter("email"), req.getParameter("password"))) {
-            Users users = UsersDAO.getUser(req.getParameter("email"));
+        if (UsersDAOold.login(req.getParameter("email"), req.getParameter("password"))) {
+            Users users = UsersDAOold.getUser(req.getParameter("email"));
             assert users != null;
 
             req.getSession().setAttribute("user", users);

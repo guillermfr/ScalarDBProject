@@ -7,7 +7,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-import com.cytech.marketplace.dao.ArticlesDAO;
+import com.cytech.marketplace.dao.ArticlesDAOold;
 import com.cytech.marketplace.entity.Articles;
 
 import java.io.IOException;
@@ -23,7 +23,7 @@ public class ProductPageController extends HttpServlet {
 
 
         if (productId != null && !productId.isEmpty()) {
-            Articles product = ArticlesDAO.getArticle(UUID.fromString(productId));
+            Articles product = ArticlesDAOold.getArticle(UUID.fromString(productId));
 
             if (cart.containsKey(product)) {
                 int qtyInCart = cart.get(product);

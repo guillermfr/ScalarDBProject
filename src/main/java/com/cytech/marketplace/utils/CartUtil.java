@@ -1,6 +1,6 @@
 package com.cytech.marketplace.utils;
 
-import com.cytech.marketplace.dao.ArticlesDAO;
+import com.cytech.marketplace.dao.ArticlesDAOold;
 import com.cytech.marketplace.entity.Articles;
 import com.cytech.marketplace.entity.Users;
 import jakarta.servlet.http.HttpServletRequest;
@@ -91,7 +91,7 @@ public class CartUtil {
         String[] cartArray = cart.split(",");
         for (String cartItem : cartArray) {
             String[] cartItemArray = cartItem.split(":");
-            Articles article = ArticlesDAO.getArticle(UUID.fromString(cartItemArray[0]));
+            Articles article = ArticlesDAOold.getArticle(UUID.fromString(cartItemArray[0]));
             int quantity = Integer.parseInt(cartItemArray[1]);
             cartMap.put(article, quantity);
         }

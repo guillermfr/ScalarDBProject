@@ -1,6 +1,6 @@
 package com.cytech.marketplace.servlet;
 
-import com.cytech.marketplace.dao.ArticlesDAO;
+import com.cytech.marketplace.dao.ArticlesDAOold;
 import com.cytech.marketplace.entity.Articles;
 import com.cytech.marketplace.utils.CheckIntFloat;
 import jakarta.servlet.ServletException;
@@ -44,11 +44,11 @@ public class ModifyProductServlet extends HttpServlet {
         if(correctValues) {
             Articles modifiedProduct = new Articles(nom, new BigDecimal(prix), new BigInteger(stock), image);
             modifiedProduct.setId(UUID.fromString(id));
-            ArticlesDAO.updateArticle(modifiedProduct);
+            ArticlesDAOold.updateArticle(modifiedProduct);
             req.getRequestDispatcher("/WEB-INF/view/productManagement.jsp").forward(req, resp);
         }
         else {
-            Articles modifiedProduct = ArticlesDAO.getArticle(UUID.fromString(id));
+            Articles modifiedProduct = ArticlesDAOold.getArticle(UUID.fromString(id));
             req.setAttribute("produit", modifiedProduct);
             req.setAttribute("error", true);
             req.getRequestDispatcher("/WEB-INF/view/modifyProduct.jsp").forward(req, resp);

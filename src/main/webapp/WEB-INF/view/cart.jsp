@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" import="com.cytech.marketplace.dao.ArticlesDAO" %>
+<%@ page contentType="text/html;charset=UTF-8" import="com.cytech.marketplace.dao.ArticlesDAOold" %>
 <html>
 <head>
     <title>Panier</title>
