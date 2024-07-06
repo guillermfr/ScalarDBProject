@@ -1,26 +1,28 @@
 package com.cytech.marketplace.utils;
 
-import com.cytech.marketplace.dao.UsersDAOold;
+import com.cytech.marketplace.dao.UsersDAO;
 import com.cytech.marketplace.entity.Articles;
 import com.cytech.marketplace.entity.Users;
+import com.scalar.db.exception.transaction.TransactionException;
 
-import java.math.BigInteger;
+import java.io.IOException;
 import java.util.Map;
 
 import static com.cytech.marketplace.utils.CartUtil.cartToString;
 import static com.cytech.marketplace.utils.CartUtil.stringToCart;
 
 public class UsersUtil {
-    public static void setCart(Users user, Map<Articles, Integer> cart) {
+    public static void setCart(Users user, Map<Articles, Integer> cart) throws IOException, TransactionException {
         user.setCart(cart == null ? null : cartToString(cart));
-        UsersDAOold.updateUser(user);
+        UsersDAO usersDAO = new UsersDAO();
+        usersDAO.updateUser(user);
     }
 
     public static Map<Articles, Integer> getCart(Users user) throws Exception {
         return stringToCart(user.getCart());
     }
 
-    public static void emptyCart(Users user) {
+    public static void emptyCart(Users user) throws TransactionException, IOException {
         setCart(user, null);
     }
 
@@ -40,13 +42,15 @@ public class UsersUtil {
         setCart(user, cart);
     }
 
-    public static void addLoyaltyPoints(Users user, int points) {
+    public static void addLoyaltyPoints(Users user, int points) throws IOException, TransactionException {
         user.setLoyaltyPoints(user.getLoyaltyPoints());
-        UsersDAOold.updateUser(user);
+        UsersDAO usersDAO = new UsersDAO();
+        usersDAO.updateUser(user);
     }
 
-    public static void removeLoyaltyPoints(Users user, int points) {
+    public static void removeLoyaltyPoints(Users user, int points) throws TransactionException, IOException {
         user.setLoyaltyPoints(user.getLoyaltyPoints());
-        UsersDAOold.updateUser(user);
+        UsersDAO usersDAO = new UsersDAO();
+        usersDAO.updateUser(user);
     }
 }

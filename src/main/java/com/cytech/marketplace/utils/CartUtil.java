@@ -3,6 +3,7 @@ package com.cytech.marketplace.utils;
 import com.cytech.marketplace.dao.ArticlesDAO;
 import com.cytech.marketplace.entity.Articles;
 import com.cytech.marketplace.entity.Users;
+import com.scalar.db.exception.transaction.TransactionException;
 import jakarta.servlet.http.HttpServletRequest;
 
 import java.io.IOException;
@@ -63,7 +64,7 @@ public class CartUtil {
         req.getSession().setAttribute("cart", databaseCart);
     }
 
-    public static void emptyCart(HttpServletRequest req) {
+    public static void emptyCart(HttpServletRequest req) throws TransactionException, IOException {
         req.getSession().removeAttribute("cart");
         Users users = (Users) req.getSession().getAttribute("user");
         if (users != null) {
