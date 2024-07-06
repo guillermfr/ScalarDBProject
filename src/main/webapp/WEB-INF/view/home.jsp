@@ -26,8 +26,8 @@
     ArticlesDAO articlesDAO = new ArticlesDAO();
     try {
         articlesDAO.loadInitialData();
-        Articles test = articlesDAO.getArticle(1);
-        System.out.println(test.toString());
+        // Articles test = articlesDAO.getArticle(1);
+        // System.out.println(test.toString());
     } catch (Exception e) {
         throw new RuntimeException(e);
     }

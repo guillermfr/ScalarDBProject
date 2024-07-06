@@ -39,10 +39,9 @@ public class InfoPersonnalServlet extends HttpServlet {
 
         if(correctValues) {
             Map<Articles, Integer> cart = CartUtil.getCart(req);
-
-            BigDecimal total = new BigDecimal(0);
+            float total = 0;
             for (Map.Entry<Articles, Integer> article : cart.entrySet()) {
-                total = total.add(article.getKey().getPrice().multiply(BigDecimal.valueOf(article.getValue())));
+                total += article.getKey().getPrice();
             }
             req.getSession().setAttribute("total", total);
 

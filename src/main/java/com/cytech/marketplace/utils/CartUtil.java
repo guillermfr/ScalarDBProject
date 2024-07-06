@@ -1,10 +1,11 @@
 package com.cytech.marketplace.utils;
 
-import com.cytech.marketplace.dao.ArticlesDAOold;
+import com.cytech.marketplace.dao.ArticlesDAO;
 import com.cytech.marketplace.entity.Articles;
 import com.cytech.marketplace.entity.Users;
 import jakarta.servlet.http.HttpServletRequest;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -26,7 +27,7 @@ public class CartUtil {
      * @param article   The article to add
      * @param quantity  The quantity of the article to add
      */
-    public static void addArticleToCart(HttpServletRequest req, Articles article, int quantity) {
+    public static void addArticleToCart(HttpServletRequest req, Articles article, int quantity) throws Exception {
         Map<Articles, Integer> cart = getCart(req);
         if (cart.containsKey(article)) {
             cart.put(article, cart.get(article) + quantity);
@@ -46,7 +47,7 @@ public class CartUtil {
      * @param req       The request
      * @param users     The user
      */
-    public static void mergeCart(HttpServletRequest req, Users users) {
+    public static void mergeCart(HttpServletRequest req, Users users) throws Exception {
         Map<Articles, Integer> sessionCart = getCart(req);
         Map<Articles, Integer> databaseCart = UsersUtil.getCart(users);
 
@@ -73,7 +74,7 @@ public class CartUtil {
     public static String cartToString(Map<Articles, Integer> cart) {
         StringBuilder sb = new StringBuilder();
         for (Map.Entry<Articles, Integer> entry : cart.entrySet()) {
-            sb.append(entry.getKey().getId().toString());
+            sb.append(entry.getKey().getId());
             sb.append(":");
             sb.append(entry.getValue());
             sb.append(",");
@@ -81,7 +82,7 @@ public class CartUtil {
         return sb.toString();
     }
 
-    public static Map<Articles, Integer> stringToCart(String cart) {
+    public static Map<Articles, Integer> stringToCart(String cart) throws Exception {
         Map<Articles, Integer> cartMap = new HashMap<>();
 
         if (cart == null || cart.isEmpty()) {
@@ -91,7 +92,8 @@ public class CartUtil {
         String[] cartArray = cart.split(",");
         for (String cartItem : cartArray) {
             String[] cartItemArray = cartItem.split(":");
-            Articles article = ArticlesDAOold.getArticle(UUID.fromString(cartItemArray[0]));
+            ArticlesDAO articlesDAO = new ArticlesDAO();
+            Articles article = articlesDAO.getArticle(cartItemArray[0]);
             int quantity = Integer.parseInt(cartItemArray[1]);
             cartMap.put(article, quantity);
         }

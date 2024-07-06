@@ -22,7 +22,11 @@ public class DebugAddProductsToCart extends CartController {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        addArticleToCart(req, vittel, 5);
+        try {
+            addArticleToCart(req, vittel, 5);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
 
         super.doGet(req, resp);
     }

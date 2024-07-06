@@ -16,7 +16,7 @@ public class UsersUtil {
         UsersDAOold.updateUser(user);
     }
 
-    public static Map<Articles, Integer> getCart(Users user) {
+    public static Map<Articles, Integer> getCart(Users user) throws Exception {
         return stringToCart(user.getCart());
     }
 
@@ -30,7 +30,7 @@ public class UsersUtil {
      * @param article   The article to add to the cart.
      * @param quantity  The quantity of the article to add to the cart.
      */
-    public static void addArticleToCart(Users user, Articles article, int quantity) {
+    public static void addArticleToCart(Users user, Articles article, int quantity) throws Exception {
         Map<Articles, Integer> cart = getCart(user);
         if (cart.containsKey(article)) {
             cart.put(article, quantity + cart.get(article));
@@ -41,7 +41,7 @@ public class UsersUtil {
     }
 
     public static void addLoyaltyPoints(Users user, int points) {
-        user.setLoyaltyPoints(user.getLoyaltyPoints().add(BigInteger.valueOf(points)));
+        user.setLoyaltyPoints(user.getLoyaltyPoints());
         UsersDAOold.updateUser(user);
     }
 

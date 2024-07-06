@@ -38,12 +38,24 @@ public class AddToCartServlet extends HttpServlet {
             int toPutInCart = qty + qtyInCart;
             if (product.getStock() < 0){
                 int correctedQty = abs(qtyInCart - product.getStock());
-                CartUtil.addArticleToCart(req, product, correctedQty);
+                try {
+                    CartUtil.addArticleToCart(req, product, correctedQty);
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
             } else {
-            CartUtil.addArticleToCart(req, product, qty);
+                try {
+                    CartUtil.addArticleToCart(req, product, qty);
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
             }
         } else {
-            CartUtil.addArticleToCart(req, product, qty);
+            try {
+                CartUtil.addArticleToCart(req, product, qty);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
         }
         req.getRequestDispatcher("/WEB-INF/view/cart.jsp").forward(req, resp);
     }
