@@ -10,13 +10,15 @@
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
-<%  ArticlesDAO articlesDAO = new ArticlesDAO();
+<%
+    ArticlesDAO articlesDAO = new ArticlesDAO();
     List<Articles> articles = null;
     try {
         articles = articlesDAO.getAllArticles();
     } catch (Exception e) {
         throw new RuntimeException(e);
-    } %>
+    }
+%>
 
 <body>
     <%@ include file="components/header.jsp" %>
