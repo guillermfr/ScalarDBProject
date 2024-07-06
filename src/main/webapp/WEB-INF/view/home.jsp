@@ -19,39 +19,16 @@
     </style>
 </head>
 
-<%--<% Articles bestSeller = ArticlesDAO.getArticle("Bouteille 1.5L Eau du Robinet de Wa'er");%>--%>
-<%--<% List<Articles> articles = ArticlesDAO.getArticles(); %>--%>
-
 <%
     ArticlesDAO articlesDAO = new ArticlesDAO();
+    List<Articles> articles = null;
+    Articles bestSeller = null;
     try {
-        articlesDAO.loadInitialData();
-        // Articles test = articlesDAO.getArticle(1);
-        // System.out.println(test.toString());
+        articles = articlesDAO.getAllArticles();
+        bestSeller = articlesDAO.getArticle("Article 1");
     } catch (Exception e) {
         throw new RuntimeException(e);
     }
-//    try {
-//        DistributedTransaction dt = dtm.start();
-//
-//        // Create a `Get` operation by using a secondary index.
-//        Key indexKey = Key.ofInt("c3", 5);
-//
-//        Get get =
-//                Get.newBuilder()
-//                        .namespace("ns")
-//                        .table("Articles")
-//                        .indexKey(indexKey)
-//                        .projections("c1", "c2", "c3", "c4")
-//                        .build();
-//
-//        // Execute the `Get` operation.
-//        Optional<Result> result = dt.get(get);
-//
-//        System.out.println(result.toString());
-//    } catch (TransactionException e) {
-//        throw new RuntimeException(e);
-//    }
 %>
 
 <body>
@@ -63,35 +40,35 @@
                 <h1 class="text-3xl font-semibold mb-2 text-white"> Welcome to WA'ER</h1>
                 <p class="text-l font-semibold text-white"> Rediscover the taste of water with our best sell'er</p>
                 <div class="flex justify-center">
-<%--                    <a href="productPage?id=<%= bestSeller.getId() %>">--%>
-<%--                        <div class="bg-white float-left   border p-4 m-4 cursor-pointer">--%>
-<%--                            <img src="<%= bestSeller.getImage() %>" alt="product image" class="mx-auto mb-2 max-h-32">--%>
-<%--                            <div>--%>
-<%--                                <h3 class="text-center mb-2"><%= bestSeller.getName() %></h3>--%>
-<%--                                <p class="text-center"><%= bestSeller.getPrice() %>€</p>--%>
-<%--                            </div>--%>
-<%--                        </div>--%>
-<%--                    </a>--%>
+                    <a href="productPage?id=<%= bestSeller.getId() %>">
+                        <div class="bg-white float-left   border p-4 m-4 cursor-pointer">
+                            <img src="<%= bestSeller.getImage() %>" alt="product image" class="mx-auto mb-2 max-h-32">
+                            <div>
+                                <h3 class="text-center mb-2"><%= bestSeller.getName() %></h3>
+                                <p class="text-center"><%= bestSeller.getPrice() %>€</p>
+                            </div>
+                        </div>
+                    </a>
                 </div>
             </div>
         </div >
         <div class="text-center">
             <div class="text-xl pt-4 pb-1"> More products</div>
             <div class="flex justify-center">
-<%--                <%--%>
-<%--                    for (int i=0; i<5; i++) {--%>
-<%--                        Articles product = articles.get(i);--%>
-<%--                %>--%>
-<%--                        <a href="productPage?id=<%= product.getId() %>">--%>
-<%--                            <div class=" float-left w-64 h-64 border p-4 m-4 cursor-pointer">--%>
-<%--                                <img src="<%= product.getImage() %>" alt="product image" class="mx-auto mb-2 max-h-32">--%>
-<%--                                <div>--%>
-<%--                                    <h3 class="text-center mb-2"><%= product.getName() %></h3>--%>
-<%--                                    <p class="text-center"><%= product.getPrice() %>€</p>--%>
-<%--                                </div>--%>
-<%--                            </div>--%>
-<%--                        </a>--%>
-<%--                <% } %>--%>
+                <%
+                    for (int i=0; i<5; i++) {
+                        Articles product = articles.get(i);
+                %>
+                        <a href="productPage?id=<%= product.getId() %>">
+                            <div class=" float-left w-64 h-64 border p-4 m-4 cursor-pointer">
+                                <img src="<%= product.getImage() %>" alt="product image" class="mx-auto mb-2 max-h-32">
+                                <div>
+                                    <h3 class="text-center mb-2"><%= product.getName() %></h3>
+                                    <p class="text-center"><%= product.getPrice() %>€</p>
+                                </div>
+                            </div>
+                        </a>
+                <% } %>
             </div>
             <div class="p-2">
                 <form action="catalogue" method="get">
