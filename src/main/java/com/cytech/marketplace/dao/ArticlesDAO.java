@@ -1,6 +1,7 @@
 package com.cytech.marketplace.dao;
 
 import com.cytech.marketplace.entity.Articles;
+import com.cytech.marketplace.utils.CreateIDUtil;
 import com.scalar.db.api.*;
 import com.scalar.db.exception.transaction.AbortException;
 import com.scalar.db.io.Key;
@@ -33,15 +34,44 @@ public class ArticlesDAO {
     }
 
     public void loadInitialData() throws Exception {
+        addArticle("Article 1", 10.0f, 100, "image1");
+        addArticle("Article 2", 20.0f, 200, "image2");
+        addArticle("Article 3", 30.0f, 300, "image3");
+        addArticle("Article 4", 40.0f, 400, "image4");
+        addArticle("Article 5", 50.0f, 500, "image5");
+    }
+
+    public void addArticle(
+            long id,
+            String name,
+            float price,
+            int stock,
+            String image
+    ) throws Exception {
+
         DistributedTransaction transaction = null;
+
         try {
             transaction = manager.start();
-            loadArticleIfNotExists(transaction, 1, "Article 1", 10.0f, 100, "image1");
-            loadArticleIfNotExists(transaction, 2, "Article 2", 20.0f, 200, "image2");
-            loadArticleIfNotExists(transaction, 3, "Article 3", 30.0f, 300, "image3");
-            loadArticleIfNotExists(transaction, 4, "Article 4", 40.0f, 400, "image4");
-            loadArticleIfNotExists(transaction, 5, "Article 5", 50.0f, 500, "image5");
-            transaction.commit();
+            Optional<Result> article =
+                    transaction.get(
+                            Get.newBuilder()
+                                    .namespace("marketplace")
+                                    .table("articles")
+                                    .partitionKey(Key.ofBigInt("id", id))
+                                    .build());
+            if (!article.isPresent()) {
+                transaction.put(
+                        Put.newBuilder()
+                                .namespace("marketplace")
+                                .table("articles")
+                                .partitionKey(Key.ofBigInt("id", id))
+                                .textValue("name", name)
+                                .floatValue("price", price)
+                                .intValue("stock", stock)
+                                .textValue("image", image)
+                                .build());
+            }
         } catch (Exception e) {
             if (transaction != null) {
                 transaction.abort();
@@ -50,34 +80,14 @@ public class ArticlesDAO {
         }
     }
 
-    //TODO: auto increment id
-    private void loadArticleIfNotExists(
-            DistributedTransaction transaction,
-            long id,
+    public void addArticle(
             String name,
             float price,
             int stock,
-            String image)
-            throws Exception {
-        Optional<Result> article =
-                transaction.get(
-                        Get.newBuilder()
-                                .namespace("marketplace")
-                                .table("articles")
-                                .partitionKey(Key.ofBigInt("id", id))
-                                .build());
-        if (!article.isPresent()) {
-            transaction.put(
-                    Put.newBuilder()
-                            .namespace("marketplace")
-                            .table("articles")
-                            .partitionKey(Key.ofBigInt("id", id))
-                            .textValue("name", name)
-                            .floatValue("price", price)
-                            .intValue("stock", stock)
-                            .textValue("image", image)
-                            .build());
-        }
+            String image
+    ) throws Exception {
+        long id = CreateIDUtil.createID();
+        addArticle(id, name, price, stock, image);
     }
 
     public void updateArticle(Articles articles) throws AbortException {
