@@ -1,11 +1,15 @@
 package com.cytech.marketplace.dao;
 
+import com.cytech.marketplace.entity.Articles;
 import com.scalar.db.api.*;
+import com.scalar.db.exception.transaction.AbortException;
 import com.scalar.db.io.Key;
 import com.scalar.db.service.TransactionFactory;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.Properties;
 
@@ -46,9 +50,10 @@ public class ArticlesDAO {
         }
     }
 
+    //TODO: auto increment id
     private void loadArticleIfNotExists(
             DistributedTransaction transaction,
-            int id,
+            long id,
             String name,
             float price,
             int stock,
@@ -59,14 +64,14 @@ public class ArticlesDAO {
                         Get.newBuilder()
                                 .namespace("marketplace")
                                 .table("articles")
-                                .partitionKey(Key.ofInt("id", id))
+                                .partitionKey(Key.ofBigInt("id", id))
                                 .build());
         if (!article.isPresent()) {
             transaction.put(
                     Put.newBuilder()
                             .namespace("marketplace")
                             .table("articles")
-                            .partitionKey(Key.ofInt("id", id))
+                            .partitionKey(Key.ofBigInt("id", id))
                             .textValue("name", name)
                             .floatValue("price", price)
                             .intValue("stock", stock)
@@ -75,35 +80,153 @@ public class ArticlesDAO {
         }
     }
 
-    public String getArticleInfo(int id) throws Exception {
+    public void updateArticle(Articles articles) throws AbortException {
         DistributedTransaction transaction = null;
         try {
             transaction = manager.start();
-            Optional<Result> article =
+            transaction.put(
+                    Put.newBuilder()
+                            .namespace("marketplace")
+                            .table("articles")
+                            .partitionKey(Key.ofBigInt("id", articles.getId()))
+                            .textValue("name", articles.getName())
+                            .floatValue("price", articles.getPrice())
+                            .intValue("stock", articles.getStock())
+                            .textValue("image", articles.getImage())
+                            .build());
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.abort();
+            }
+            e.printStackTrace();
+        }
+    }
+
+    public void deleteArticle(long id) throws AbortException {
+        DistributedTransaction transaction = null;
+        try {
+            transaction = manager.start();
+            transaction.delete(
+                    Delete.newBuilder()
+                            .namespace("marketplace")
+                            .table("articles")
+                            .partitionKey(Key.ofBigInt("id", id))
+                            .build());
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.abort();
+            }
+            e.printStackTrace();
+        }
+    }
+
+    public void deleteArticle(Articles articles) throws AbortException {
+        deleteArticle(articles.getId());
+    }
+
+    public void deleteArticle(String name) throws Exception {
+        deleteArticle(getArticle(name).getId());
+    }
+
+    public Articles getArticle(long id) throws Exception {
+        DistributedTransaction transaction = null;
+        try {
+            transaction = manager.start();
+            Optional<Result> result =
                     transaction.get(
                             Get.newBuilder()
                                     .namespace("marketplace")
                                     .table("articles")
                                     .partitionKey(Key.ofInt("id", id))
                                     .build());
-            if (!article.isPresent()) {
+            if (!result.isPresent()) {
                 throw new Exception("Article not found");
             }
 
             transaction.commit();
 
-            return String.format(
-                    "Article %d: %s, price: %.2f, stock: %d, image: %s",
-                    id,
-                    article.get().getText("name"),
-                    article.get().getFloat("price"),
-                    article.get().getInt("stock"),
-                    article.get().getText("image"));
+            return new Articles(
+                    result.get().getText("name"),
+                    result.get().getFloat("price"),
+                    result.get().getInt("stock"),
+                    result.get().getText("image")
+            );
         } catch (Exception e) {
             if (transaction != null) {
                 transaction.abort();
             }
             throw e;
         }
+    }
+
+    public Articles getArticle(String name) throws Exception {
+        DistributedTransaction transaction = null;
+        try {
+            transaction = manager.start();
+            Scan scan = Scan.newBuilder()
+                    .namespace("marketplace")
+                    .table("articles")
+                    .all().build();
+
+            List<Result> resultList = transaction.scan(scan);
+            for (Result result : resultList) {
+                if (name.equals(result.getText("name"))) {
+                    transaction.commit();
+                    return new Articles(
+                            result.getText("name"),
+                            result.getFloat("price"),
+                            result.getInt("stock"),
+                            result.getText("image")
+                    );
+                }
+            }
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.abort();
+            }
+            throw e;
+        }
+        return null;
+    }
+
+    public List<Articles> getAllArticles() throws Exception {
+        List<Articles> articlesList = new ArrayList<>();
+        DistributedTransaction transaction = null;
+        try {
+            transaction = manager.start();
+            Scan scan = Scan.newBuilder()
+                    .namespace("marketplace")
+                    .table("articles")
+                    .all().build();
+
+            List<Result> results = transaction.scan(scan);
+            for (Result result : results) {
+                articlesList.add(new Articles(
+                        result.getText("name"),
+                        result.getFloat("price"),
+                        result.getInt("stock"),
+                        result.getText("image")));
+            }
+
+            transaction.commit();
+            return articlesList;
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.abort();
+            }
+            throw e;
+        }
+    }
+
+    public boolean checkStock(Articles articles, int quantity) throws Exception {
+        Articles updatedArticles = getArticle(articles.getId());
+        return updatedArticles.getStock() >= quantity;
+    }
+
+    public boolean checkStock(String name, int quantity) throws Exception {
+        Articles updatedArticles = getArticle(name);
+        return updatedArticles.getStock() >= quantity;
     }
 }

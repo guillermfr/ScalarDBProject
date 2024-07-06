@@ -5,7 +5,7 @@
       "id"
     ],
     "columns": {
-      "id": "INT",
+      "id": "BIGINT",
       "name": "TEXT",
       "price": "FLOAT",
       "stock": "INT",
@@ -18,8 +18,9 @@
       "id"
     ],
     "columns": {
-      "id": "INT",
+      "id": "BIGINT",
       "email": "TEXT",
+      "name": "TEXT",
       "password": "TEXT",
       "is_admin": "BOOLEAN",
       "loyalty_points": "INT",
