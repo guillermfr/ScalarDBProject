@@ -5,7 +5,7 @@ public class Articles {
     private float price;
     private int stock;
     private String image;
-    private int id;
+    private long id;
 
     public Articles(String nom, float prix, int stock, String image) {
         this.name = nom;
@@ -48,11 +48,11 @@ public class Articles {
         this.image = image;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
