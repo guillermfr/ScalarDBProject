@@ -12,7 +12,7 @@
                 overallTotal += parseFloat(item.innerHTML);
             });
 
-            document.getElementById('total').innerHTML = overallTotal.toFixed(2) + ' €';
+            document.getElementById('total').innerHTML = overallTotal.toFixed(2) + ' ¥';
         }
 
         window.onload = calculateTotal;
@@ -43,7 +43,7 @@
                              </div>
                             <div class="flex flex-row">
                                 <div class="mx-4 flex flex-col justify-center">
-                                    <span id="${item.key.getId()}-price" class="mb-2 text-right">${item.key.getPrice() * item.value} €</span>
+                                    <span id="${item.key.getId()}-price" class="mb-2 text-right">${item.key.getPrice() * item.value} ¥</span>
                                     <label for="${item.key.getId()}-input"></label>
                                     <input
                                         id="${item.key.getId()}-input"

@@ -64,7 +64,7 @@
                 <%--            <td class="whitespace-nowrap px-6 py-4"> <%= a.getImage() %> </td>--%>
                             <td class="whitespace-nowrap px-6 py-4"> <input name="nom" type="text" value='<%= a.getName() %>' readonly> </td>
                             <td class="whitespace-nowrap px-6 py-4"> <input name="id" type="text" value="<%= a.getId() %>" readonly size="30"> </td>
-                            <td class="whitespace-nowrap px-6 py-4"> <%= a.getPrice() %>€ </td>
+                            <td class="whitespace-nowrap px-6 py-4"> <%= a.getPrice() %>¥ </td>
                             <td class="whitespace-nowrap px-6 py-4"> <%= a.getStock() %> </td>
                             <td class="whitespace-nowrap px-6 py-4"><button type="submit" name="modifier" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center">Modify</button></td>
                             <td class="whitespace-nowrap px-6 py-4"><button type="submit" name="supprimer" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center">Remove</button></td>

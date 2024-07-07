@@ -32,8 +32,8 @@ public class Articles {
         this.name = name;
     }
 
-    public float getPrice() {
-        return price;
+    public int getPrice() {
+        return (int)price;
     }
 
     public void setPrice(float price) {

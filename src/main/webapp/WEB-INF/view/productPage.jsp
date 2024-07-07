@@ -32,7 +32,7 @@
             <div class="flex flex-col justify-start bg-blue-50 p-6">
                 <h2 class="text-xl font-semibold mb-4"><%=product.getName() %></h2>
                 <div class="flex flex-row items-center justify-between">
-                    <p class="text-l font-bold mt-4"><%= product.getPrice() %>€</p>
+                    <p class="text-l font-bold mt-4"><%= product.getPrice() %>¥</p>
                     <div class="ml-80 flex">
                         <form action="<%= request.getContextPath() %>/addToCart-servlet" method="get" class="text-right">
                             <input type="hidden" name="productId" value="<%= product.getId() %>">
