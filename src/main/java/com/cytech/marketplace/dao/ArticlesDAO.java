@@ -183,7 +183,8 @@ public Articles getArticle(String name) throws Exception {
                             result.getText("name"),
                             result.getFloat("price"),
                             result.getInt("stock"),
-                            result.getText("image")
+                            result.getText("image"),
+                            result.getBigInt("id")
                     );
                 }
             }
