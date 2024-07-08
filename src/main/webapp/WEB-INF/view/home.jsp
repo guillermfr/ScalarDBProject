@@ -26,7 +26,6 @@
     try {
         articles = articlesDAO.getAllArticles();
         bestSeller = articlesDAO.getArticle("1L Bottle Eau Royale");
-        System.out.println("bestSeller ID: " + bestSeller.getId());
     } catch (Exception e) {
         throw new RuntimeException(e);
     }
