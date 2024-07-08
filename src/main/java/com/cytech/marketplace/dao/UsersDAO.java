@@ -70,25 +70,36 @@ public class UsersDAO {
         DistributedTransaction transaction = null;
         try {
             transaction = manager.start();
-            transaction.put(
-                Put.newBuilder()
-                    .namespace("marketplace")
-                    .table("users")
-                    .partitionKey(Key.ofBigInt("id", user.getId()))
-                    .textValue("email", user.getEmail())
-                    .textValue("name", user.getName())
-                    .textValue("password", user.getPassword())
-                    .booleanValue("is_admin", user.getAdmin())
-                    .intValue("loyalty_points", user.getLoyaltyPoints())
-                    .textValue("cart", user.getCart())
-                    .build()
+            Optional<Result> existingUser = transaction.get(
+                    Get.newBuilder()
+                            .namespace("marketplace")
+                            .table("users")
+                            .partitionKey(Key.ofBigInt("id", user.getId()))
+                            .build()
             );
-            transaction.commit();
+            if (existingUser.isPresent()) {
+                transaction.put(
+                        Put.newBuilder()
+                                .namespace("marketplace")
+                                .table("users")
+                                .partitionKey(Key.ofBigInt("id", user.getId()))
+                                .textValue("email", user.getEmail())
+                                .textValue("name", user.getName())
+                                .textValue("password", user.getPassword())
+                                .booleanValue("is_admin", user.getAdmin())
+                                .intValue("loyalty_points", user.getLoyaltyPoints())
+                                .textValue("cart", user.getCart())
+                                .build()
+                );
+                transaction.commit();
+            } else {
+                throw new Exception("User does not exist and cannot be updated.");
+            }
         } catch (Exception e) {
             if (transaction != null) {
                 transaction.abort();
             }
-            throw e;
+            e.printStackTrace();
         }
     }
 
