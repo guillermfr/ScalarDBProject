@@ -33,14 +33,6 @@ public class ArticlesDAO {
         manager.close();
     }
 
-    public void loadInitialData() throws Exception {
-        addArticle("Article 1", 10.0f, 100, "image1");
-        addArticle("Article 2", 20.0f, 200, "image2");
-        addArticle("Article 3", 30.0f, 300, "image3");
-        addArticle("Article 4", 40.0f, 400, "image4");
-        addArticle("Article 5", 50.0f, 500, "image5");
-    }
-
     public void addArticle(
             long id,
             String name,
