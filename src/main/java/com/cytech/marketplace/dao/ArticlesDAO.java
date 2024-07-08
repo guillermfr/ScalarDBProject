@@ -156,7 +156,8 @@ public class ArticlesDAO {
                     result.get().getText("name"),
                     result.get().getFloat("price"),
                     result.get().getInt("stock"),
-                    result.get().getText("image")
+                    result.get().getText("image"),
+                    result.get().getBigInt("id")
             );
         } catch (Exception e) {
             if (transaction != null) {
