@@ -159,7 +159,7 @@ public class ArticlesDAO {
         }
     }
 
-public Articles getArticle(String name) throws Exception {
+    public Articles getArticle(String name) throws Exception {
         DistributedTransaction transaction = null;
         try {
             transaction = manager.start();
