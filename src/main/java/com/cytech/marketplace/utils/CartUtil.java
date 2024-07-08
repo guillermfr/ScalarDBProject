@@ -94,7 +94,7 @@ public class CartUtil {
         for (String cartItem : cartArray) {
             String[] cartItemArray = cartItem.split(":");
             ArticlesDAO articlesDAO = new ArticlesDAO();
-            Articles article = articlesDAO.getArticle(cartItemArray[0]);
+            Articles article = articlesDAO.getArticle(Long.parseLong(cartItemArray[0]));
             int quantity = Integer.parseInt(cartItemArray[1]);
             cartMap.put(article, quantity);
         }
