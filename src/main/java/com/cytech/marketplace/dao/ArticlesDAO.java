@@ -81,17 +81,29 @@ public class ArticlesDAO {
         DistributedTransaction transaction = null;
         try {
             transaction = manager.start();
-            transaction.put(
-                    Put.newBuilder()
+            Optional<Result> existingArticle = transaction.get(
+                    Get.newBuilder()
                             .namespace("marketplace")
                             .table("articles")
                             .partitionKey(Key.ofBigInt("id", articles.getId()))
-                            .textValue("name", articles.getName())
-                            .floatValue("price", articles.getPrice())
-                            .intValue("stock", articles.getStock())
-                            .textValue("image", articles.getImage())
-                            .build());
-            transaction.commit();
+                            .build()
+            );
+            if (existingArticle.isPresent()) {
+                transaction.put(
+                        Put.newBuilder()
+                                .namespace("marketplace")
+                                .table("articles")
+                                .partitionKey(Key.ofBigInt("id", articles.getId()))
+                                .textValue("name", articles.getName())
+                                .floatValue("price", articles.getPrice())
+                                .intValue("stock", articles.getStock())
+                                .textValue("image", articles.getImage())
+                                .build()
+                );
+                transaction.commit();
+            } else {
+                throw new Exception("Article does not exist and cannot be updated.");
+            }
         } catch (Exception e) {
             if (transaction != null) {
                 transaction.abort();
@@ -99,6 +111,30 @@ public class ArticlesDAO {
             e.printStackTrace();
         }
     }
+
+//    public void updateArticle(Articles articles) throws AbortException {
+//        DistributedTransaction transaction = null;
+//        try {
+//            transaction = manager.start();
+//            transaction.put(
+//                    Put.newBuilder()
+//                            .namespace("marketplace")
+//                            .table("articles")
+//                            .partitionKey(Key.ofBigInt("id", articles.getId()))
+//                            .textValue("name", articles.getName())
+//                            .floatValue("price", articles.getPrice())
+//                            .intValue("stock", articles.getStock())
+//                            .textValue("image", articles.getImage())
+//                            .build()
+//            );
+//            transaction.commit();
+//        } catch (Exception e) {
+//            if (transaction != null) {
+//                transaction.abort();
+//            }
+//            e.printStackTrace();
+//        }
+//    }
 
     public void deleteArticle(long id) throws AbortException {
         DistributedTransaction transaction = null;
