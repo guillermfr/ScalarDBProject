@@ -225,8 +225,8 @@ public class ArticlesDAO {
         return updatedArticles.getStock() >= quantity;
     }
 
-    public boolean checkStock(String name, int quantity) throws Exception {
-        Articles updatedArticles = getArticle(name);
+    public boolean checkStock(String id, int quantity) throws Exception {
+        Articles updatedArticles = getArticle(Long.parseLong(id));
         return updatedArticles.getStock() >= quantity;
     }
 }
