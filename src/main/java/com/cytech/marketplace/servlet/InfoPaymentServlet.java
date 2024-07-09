@@ -55,24 +55,19 @@ public class InfoPaymentServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        // TODO: enlever les commentaires ou les traduire en anglais
-        // On récupère les champs du formulaire avec les informations de paiement
         String nomCarte = req.getParameter("nomCarte");
         String numeroCarte = req.getParameter("numeroCarte");
         String dateExpiration = req.getParameter("dateExpiration");
         String codeCarte = req.getParameter("codeCarte");
         String usePointsString = req.getParameter("usePoints");
 
-        // On récupère l'attribut permettant de savoir si l'utilisateur a utilisé ses points ou non
         boolean usePoints = false;
         if(usePointsString != null) {
             usePoints = usePointsString.equals("on");
         }
 
-        // On récupère les informations entrées par l'utilisateur sur la page infopersonnal.jsp
         Object personnalInformationObject = req.getSession().getAttribute("personnalInformation");
 
-        // On vérifie si l'ensemble des informations récupérées sont correctes ou non
         boolean correctValues = checkValues(nomCarte, numeroCarte, dateExpiration, codeCarte, personnalInformationObject);
 
         if(correctValues) {
@@ -80,7 +75,6 @@ public class InfoPaymentServlet extends HttpServlet {
             Map<String, String> personnalInformation = (Map<String, String>) personnalInformationObject;
             Map<Articles, Integer> cart = CartUtil.getCart(req);
 
-            // Pour chaque article, on modifie son stock
             for (Map.Entry<Articles, Integer> article : cart.entrySet()) {
                 ArticlesDAO articlesDAO = new ArticlesDAO();
                 Articles modifiedArticle = article.getKey();
@@ -110,7 +104,6 @@ public class InfoPaymentServlet extends HttpServlet {
                 }
             }
 
-            // Supprimer toutes les variables de session qui ne sont plus utiles
             try {
                 CartUtil.emptyCart(req);
             } catch (TransactionException e) {
