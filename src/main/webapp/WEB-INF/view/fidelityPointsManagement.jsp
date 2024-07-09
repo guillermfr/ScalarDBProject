@@ -20,9 +20,9 @@
 <div class="w-4/5 bg-white shadow flex justify-between items-center py-5">
     <div class="h-full w-full flex items-center">
         <form action="productManagement" method="get">
-            <buton type="submit" class="ml-2 px-10 bg-blue-500 hover:bg-blue-600 text-white font-bold rounded">
+            <button type="submit" class="ml-2 px-10 bg-blue-500 hover:bg-blue-600 text-white font-bold rounded">
                 Product management
-            </buton>
+            </button>
         </form>
         <form action="fidelityPointsManagement" method="get">
             <button type="submit" class="ml-2 px-10 bg-gray-300 hover:bg-gray-400 text-white font-bold rounded" disabled>
