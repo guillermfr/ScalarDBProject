@@ -90,7 +90,7 @@ public class InfoPaymentServlet extends HttpServlet {
             int loyaltyPoints = 0;
             if (usePoints) {
                 loyaltyPoints = user.getLoyaltyPoints();
-                total = total - user.getLoyaltyPoints()/100;
+                total = total/100 - user.getLoyaltyPoints();
                 try {
                     UsersUtil.removeLoyaltyPoints(user, user.getLoyaltyPoints());
                 } catch (TransactionException e) {
@@ -98,7 +98,7 @@ public class InfoPaymentServlet extends HttpServlet {
                 }
             } else {
                 try {
-                    UsersUtil.addLoyaltyPoints(user, (int) total);
+                    UsersUtil.addLoyaltyPoints(user, (int) (total/100));
                 } catch (TransactionException e) {
                     throw new RuntimeException(e);
                 }
