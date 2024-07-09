@@ -55,6 +55,7 @@ public class InfoPaymentServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        // TODO: enlever les commentaires ou les traduire en anglais
         // On récupère les champs du formulaire avec les informations de paiement
         String nomCarte = req.getParameter("nomCarte");
         String numeroCarte = req.getParameter("numeroCarte");
@@ -91,11 +92,11 @@ public class InfoPaymentServlet extends HttpServlet {
                 }
             }
 
-            BigDecimal total = (BigDecimal) req.getSession().getAttribute("total");
+            float total = (float) req.getSession().getAttribute("total");
             int loyaltyPoints = 0;
             if (usePoints) {
                 loyaltyPoints = user.getLoyaltyPoints();
-                total = total.subtract(new BigDecimal(user.getLoyaltyPoints()).divide(new BigDecimal(100)));
+                total = total - user.getLoyaltyPoints()/100;
                 try {
                     UsersUtil.removeLoyaltyPoints(user, user.getLoyaltyPoints());
                 } catch (TransactionException e) {
@@ -103,12 +104,11 @@ public class InfoPaymentServlet extends HttpServlet {
                 }
             } else {
                 try {
-                    UsersUtil.addLoyaltyPoints(user, total.intValue());
+                    UsersUtil.addLoyaltyPoints(user, (int) total);
                 } catch (TransactionException e) {
                     throw new RuntimeException(e);
                 }
             }
-
 
             // Supprimer toutes les variables de session qui ne sont plus utiles
             try {
