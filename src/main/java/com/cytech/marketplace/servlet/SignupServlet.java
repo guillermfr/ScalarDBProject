@@ -23,13 +23,13 @@ public class SignupServlet extends HttpServlet {
         String confirmPassword = req.getParameter("confirmPassword");
 
         if (!password.equals(confirmPassword)) {
-            req.setAttribute("error", "Les mots de passe ne correspondent pas.");
+            req.setAttribute("error", "Passwords are not matching.");
             req.getRequestDispatcher("/WEB-INF/view/signup.jsp").forward(req, resp);
             return;
         }
 
         if (usersDAO.getUser(email) != null) {
-            req.setAttribute("error", "Un compte avec cet email existe déjà.");
+            req.setAttribute("error", "An account with this email already exists.");
             req.getRequestDispatcher("/WEB-INF/view/signup.jsp").forward(req, resp);
             return;
         }

@@ -124,9 +124,9 @@ public class InfoPaymentServlet extends HttpServlet {
         }
         else {
             if (!checkLuhn(numeroCarte)) {
-                req.setAttribute("error", "Votre numéro de carte n'est pas valide");
+                req.setAttribute("error", "Your card number is invalid");
             } else {
-                req.setAttribute("error", "Veuillez remplir tous les champs");
+                req.setAttribute("error", "Please fill all the fields.");
             }
             req.getRequestDispatcher("/WEB-INF/view/infopayment.jsp").forward(req, resp);
         }

@@ -23,7 +23,7 @@
 <%  ArticlesDAO articlesDAO = new ArticlesDAO(); %>
 <div class="flex flex-row justify-center pt-8">
     <div class="w-5/6 p-8">
-        <h2 class="text-2xl font-semibold mb-2">Summary of your purchases</h2>
+        <h2 class="text-2xl font-semibold mb-2">Summary of your cart</h2>
         <c:if test="${not empty error}">
             <div class="mb-4 rounded-md bg-red-400 p-2.5 text-center text-sm font-medium text-white">${error}</div>
         </c:if>

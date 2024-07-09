@@ -31,7 +31,7 @@
                     <button type="submit" class="w-full rounded-full bg-blue-400 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-blue-500 focus:outline-none">Log in</button>
                 </form>
                 <form action="signup" method="POST">
-                    <span class="mb-4 block text-sm font-medium text-gray-900">New member ?</span>
+                    <span class="mb-4 block text-sm font-medium text-gray-900">New member?</span>
                     <button type="submit" class="w-full rounded-full bg-blue-400 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-blue-500 focus:outline-none">Sign up</button>
                 </form>
             </div>

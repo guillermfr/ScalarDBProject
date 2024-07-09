@@ -7,6 +7,6 @@
 <body>
 <%@ include file="components/header.jsp" %>
 
-<h1 class="text-2xl font-extrabold dark:text-black pt-5 pb-8">Thanks for your purchases</h1>
+<h1 class="text-2xl font-extrabold dark:text-black pt-5 pb-8">Thanks for your purchase!</h1>
 </body>
 </html>

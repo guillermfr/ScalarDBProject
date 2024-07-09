@@ -31,7 +31,7 @@
     if(error) {
 %>
 
-<p class="text-red-600 text-xl font-extrabold px-8 py-2">There is on or more error(s) in entering the product information</p>
+<p class="text-red-600 text-xl font-extrabold px-8 py-2">One or more error(s) occured while entering the product information</p>
 
 <%
     }
@@ -39,19 +39,19 @@
 
 <div class="w-full max-w-md">
     <form method="post" action="addProduct-servlet" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-        <label class="block text-gray-700 text-sm font-bold mb-2">Nom du produit :</label>
+        <label class="block text-gray-700 text-sm font-bold mb-2">Product name:</label>
         <input type="text" name="nom" <c:if test="${not empty sessionScope.productInformation.get('nom')}">value="${sessionScope.productInformation.get('nom')}"</c:if> class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
         <br><br>
 
-        <label class="block text-gray-700 text-sm font-bold mb-2">Product price :</label>
+        <label class="block text-gray-700 text-sm font-bold mb-2">Product price:</label>
         <input type="text" name="prix" <c:if test="${not empty sessionScope.productInformation.get('prix')}">value="${sessionScope.productInformation.get('prix')}"</c:if> class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
         <br><br>
 
-        <label class="block text-gray-700 text-sm font-bold mb-2">Product stock :</label>
+        <label class="block text-gray-700 text-sm font-bold mb-2">Product stock:</label>
         <input type="text" name="stock" <c:if test="${not empty sessionScope.productInformation.get('stock')}">value="${sessionScope.productInformation.get('stock')}"</c:if> class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
         <br><br>
 
-        <label class="block text-gray-700 text-sm font-bold mb-2">Product picture :</label>
+        <label class="block text-gray-700 text-sm font-bold mb-2">Product image link:</label>
         <input type="text" name="image" <c:if test="${not empty sessionScope.productInformation.get('image')}">value="${sessionScope.productInformation.get('image')}"</c:if> class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
         <br><br>
 

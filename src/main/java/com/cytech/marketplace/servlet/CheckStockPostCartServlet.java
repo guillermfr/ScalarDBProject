@@ -55,7 +55,7 @@ public class CheckStockPostCartServlet extends HttpServlet {
 
             try {
                 if (!articlesDAO.checkStock(name, Integer.parseInt(value))) {
-                    req.setAttribute("error", "Une erreur de stock est survenue. Veuillez réessayer.");
+                    req.setAttribute("error", "A stock error occured. Please try again.");
                     req.getRequestDispatcher("/WEB-INF/view/cart.jsp").forward(req, resp);
                     return;
                 }

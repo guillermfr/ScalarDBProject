@@ -32,7 +32,7 @@
     </div>
 </div>
 
-<p class="dark:text-black px-8 pt-5">You can modify users loyalty points then click on Validate buton to apply your changement.</p>
+<p class="dark:text-black px-8 pt-5">You can modify users loyalty points then click on the "Validate" button to apply your changes.</p>
 
 <br>
 
