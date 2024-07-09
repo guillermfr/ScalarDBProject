@@ -43,13 +43,13 @@ public class UsersUtil {
     }
 
     public static void addLoyaltyPoints(Users user, int points) throws IOException, TransactionException {
-        user.setLoyaltyPoints(user.getLoyaltyPoints());
+        user.setLoyaltyPoints(user.getLoyaltyPoints() + points);
         UsersDAO usersDAO = new UsersDAO();
         usersDAO.updateUser(user);
     }
 
     public static void removeLoyaltyPoints(Users user, int points) throws TransactionException, IOException {
-        user.setLoyaltyPoints(user.getLoyaltyPoints());
+        user.setLoyaltyPoints(user.getLoyaltyPoints() - points);
         UsersDAO usersDAO = new UsersDAO();
         usersDAO.updateUser(user);
     }

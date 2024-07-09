@@ -52,22 +52,22 @@
             <div class="mb-6">
                 <input id="usePoints" name="usePoints" type="checkbox" onchange="function updateTotal() {
                     let total = ${sessionScope.get("total")};
-                    let awardedLoyaltyPoints = Math.floor(total);
-                    let discount = ${Math.round(sessionScope.get("user").getLoyaltyPoints().doubleValue()) / 100.0};
+                    let awardedLoyaltyPoints = Math.floor(total) / 100;
+                    let discount = ${Math.round(sessionScope.get("user").getLoyaltyPoints().doubleValue())};
 
                     if (document.getElementById('usePoints').checked) total -= discount;
-                    document.getElementById('total').innerHTML = 'Total : ' + total.toFixed(2) + '¥';
+                    document.getElementById('total').innerHTML = 'Total: ¥' + total.toFixed(2);
 
-                    if (Math.floor(total) < Math.floor(${sessionScope.get("total")})) awardedLoyaltyPoints = Math.floor(total);
+                    if (Math.floor(total) < Math.floor(${sessionScope.get("total")})) awardedLoyaltyPoints = Math.floor(total) / 100;
                     document.getElementById('awardedLoyaltyPoints').innerHTML = 'This purchase will earn you ' + awardedLoyaltyPoints + ` loyalty point\${awardedLoyaltyPoints <= 1 ? '' : 's'}`;
                 }
                 updateTotal()" />
-                <label for="usePoints" class="text-sm">Use your ${sessionScope.get("user").getLoyaltyPoints()} loyalty points (- ${String.format("%d", Math.round(sessionScope.get("user").getLoyaltyPoints().doubleValue()))}¥)</label>
+                <label for="usePoints" class="text-sm">Use your ${sessionScope.get("user").getLoyaltyPoints()} loyalty points (- ¥${String.format("%d", Math.round(sessionScope.get("user").getLoyaltyPoints().doubleValue()))})</label>
             </div>
             <div class="mb-6">
-                <p class="text-2xl font-semibold" id="total">Total : ${sessionScope.get("total")}¥</p>
+                <p class="text-2xl font-semibold" id="total">Total: ¥${sessionScope.get("total")}</p>
 <%--                TODO: adapt loyalty points for yen?--%>
-                <p class="text-sm text-gray-500" id="awardedLoyaltyPoints">This purchase will earn you ${String.format("%.0f", sessionScope.get("total"))} loyalty points</p>
+                <p class="text-sm text-gray-500" id="awardedLoyaltyPoints">This purchase will earn you ${String.format("%.0f", sessionScope.get("total")/100)} loyalty points</p>
             </div>
             <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Validate</button>
         </form>
