@@ -24,7 +24,7 @@
 <div class="flex">
     <div class="flex-1 w-80"></div>
     <div class="flex-1 grow">
-        <h1 class="text-4xl font-extrabold dark:text-black pt-5 pb-8">Personal information</h1>
+        <h1 class="text-4xl font-extrabold dark:text-black pt-5 pb-8">Payment information</h1>
 
         <c:if test="${not empty error}">
             <p class="text-red-600 text-l font-extrabold py-2">${error}</p>
