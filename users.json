@@ -1,18 +1,5 @@
 {
-  "marketplace.articles": {
-    "transaction": true,
-    "partition-key": [
-      "id"
-    ],
-    "columns": {
-      "id": "BIGINT",
-      "name": "TEXT",
-      "price": "INT",
-      "stock": "INT",
-      "image": "TEXT"
-    }
-  },
-  "marketplace.users": {
+  "postgres.users": {
     "transaction": true,
     "partition-key": [
       "id"

@@ -15,9 +15,12 @@ import java.util.*;
 public class UsersDAO {
     private final DistributedTransactionManager manager;
 
+    private static final String USERS_NAMESPACE = "postgres";
+    private static final String USERS_TABLE = "users";
+
     public UsersDAO() throws IOException {
         Properties loadProperties = new Properties();
-        try (InputStream input = getClass().getClassLoader().getResourceAsStream("scalardb.properties")) {
+        try (InputStream input = getClass().getClassLoader().getResourceAsStream("users.properties")) {
             loadProperties.load(input);
         } catch (IOException e) {
             throw e;
@@ -37,16 +40,16 @@ public class UsersDAO {
             transaction = manager.start();
             Optional<Result> article = transaction.get(
                 Get.newBuilder()
-                    .namespace("marketplace")
-                    .table("users")
+                    .namespace(USERS_NAMESPACE)
+                    .table(USERS_TABLE)
                     .partitionKey(Key.ofBigInt("id", user.getId()))
                     .build()
             );
             if (article.isEmpty()) {
                 transaction.put(
                     Put.newBuilder()
-                        .namespace("marketplace")
-                        .table("users")
+                        .namespace(USERS_NAMESPACE)
+                        .table(USERS_TABLE)
                         .partitionKey(Key.ofBigInt("id", user.getId()))
                         .textValue("email", user.getEmail())
                         .textValue("name", user.getName())
@@ -72,16 +75,16 @@ public class UsersDAO {
             transaction = manager.start();
             Optional<Result> existingUser = transaction.get(
                     Get.newBuilder()
-                            .namespace("marketplace")
-                            .table("users")
+                            .namespace(USERS_NAMESPACE)
+                            .table(USERS_TABLE)
                             .partitionKey(Key.ofBigInt("id", user.getId()))
                             .build()
             );
             if (existingUser.isPresent()) {
                 transaction.put(
                         Put.newBuilder()
-                                .namespace("marketplace")
-                                .table("users")
+                                .namespace(USERS_NAMESPACE)
+                                .table(USERS_TABLE)
                                 .partitionKey(Key.ofBigInt("id", user.getId()))
                                 .textValue("email", user.getEmail())
                                 .textValue("name", user.getName())
@@ -109,8 +112,8 @@ public class UsersDAO {
             transaction = manager.start();
             transaction.delete(
                 Delete.newBuilder()
-                    .namespace("marketplace")
-                    .table("users")
+                    .namespace(USERS_NAMESPACE)
+                    .table(USERS_TABLE)
                     .partitionKey(Key.ofBigInt("id", user.getId()))
                     .build()
             );
@@ -137,8 +140,8 @@ public class UsersDAO {
             transaction = manager.start();
             Optional<Result> user = transaction.get(
                 Get.newBuilder()
-                    .namespace("marketplace")
-                    .table("users")
+                    .namespace(USERS_NAMESPACE)
+                    .table(USERS_TABLE)
                     .partitionKey(Key.ofBigInt("id", id))
                     .build()
             );
@@ -185,8 +188,8 @@ public class UsersDAO {
         try {
             transaction = manager.start();
             Scan scan = Scan.newBuilder()
-                .namespace("marketplace")
-                .table("users")
+                .namespace(USERS_NAMESPACE)
+                .table(USERS_TABLE)
                 .all()
                 .build();
 
@@ -217,7 +220,6 @@ public class UsersDAO {
     }
 
     public List<Users> getUsersByName(String name) {
-        DistributedTransaction transaction = null;
         try {
             List<Users> users = getAllUsers();
 
