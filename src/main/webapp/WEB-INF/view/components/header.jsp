@@ -6,8 +6,8 @@
 <div class="flex h-[100px] w-full flex-row justify-between p-4 shadow-lg">
     <div class="w-80"></div>
     <a href="home">
-        <div class="flex w-48 flex-col justify-center text-center">
-            <img src="https://i.imgur.com/Ozypw75.png" alt="logo">
+        <div class="flex w-96 flex-col justify-center text-center">
+            <img src="https://i.imgur.com/ut5JvtJ.png" alt="logo">
         </div>
     </a>
     <div class="flex flex-row w-80 mr-10">
