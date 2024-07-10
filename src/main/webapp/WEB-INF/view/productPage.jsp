@@ -29,12 +29,12 @@
         <div class="w-full flex items-start">
             <div class="w-80"></div>
             <img src="<%= product.getImage() %>" alt="product image" class="mb-2 max-h-96 mx-10">
-            <div class="flex flex-col justify-start bg-blue-50 p-6">
+            <div class="flex flex-col justify-start bg-blue-50 p-6 w-1/3">
                 <h2 class="text-xl font-semibold mb-4"><%=product.getName() %></h2>
                 <div class="flex flex-row items-center justify-between">
                     <p class="text-l font-bold mt-4">¥<%= product.getPrice() %></p>
-                    <div class="ml-80 flex">
-                        <form action="<%= request.getContextPath() %>/addToCart-servlet" method="get" class="text-right">
+                    <div class="w-2/3 flex">
+                        <form action="<%= request.getContextPath() %>/addToCart-servlet" method="get" class="w-full flex flex-row justify-between">
                             <input type="hidden" name="productId" value="<%= product.getId() %>">
                             <label for="<%= product.getId() %>-input"></label>
                             <c:choose>
