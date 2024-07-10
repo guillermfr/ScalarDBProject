@@ -9,10 +9,18 @@
             var overallTotal = 0;
 
             items.forEach(function(item) {
-                overallTotal += parseFloat(item.innerHTML);
+                overallTotal += parseInt(item.innerHTML);
+                console.log("overallTotal: " + overallTotal)
             });
 
-            document.getElementById('total').innerHTML = overallTotal.toFixed(2) + ' ¥';
+            document.getElementById('total').innerHTML = overallTotal + ' ¥';
+        }
+
+        function updatePrice(price, value) {
+            console.log("test");
+            const result = price * value;
+            console.log("result: " + result);
+            return result + ' ¥';
         }
 
         window.onload = calculateTotal;
@@ -55,15 +63,15 @@
                                         min="0"
                                         max="${articlesDAO.getArticle(item.key.getId()).getStock()}"
                                         onkeyup="
-                                            if(this.value > ${articlesDAO.getArticle(item.key.getId()).getStock()}) this.value = ${articlesDAO.getArticle(item.key.getId()).getStock()};
-                                            if(this.value < 0) this.value = 0;
-                                            document.getElementById('${item.key.getId()}-price').innerHTML = (${articlesDAO.getArticle(item.key.getId()).getPrice()} * this.value).toFixed(2) + ' ¥';
-                                            calculateTotal();
-                                        "
+                                                if(this.value > ${articlesDAO.getArticle(item.key.getId()).getStock()}) this.value = ${articlesDAO.getArticle(item.key.getId()).getStock()};
+                                                if(this.value < 0) this.value = 0;
+                                                document.getElementById('${item.key.getId()}-price').innerHTML = updatePrice(${item.key.getPrice()}, this.value);
+                                                calculateTotal();
+                                                "
                                         onchange="
-                                            document.getElementById('${item.key.getId()}-price').innerHTML = (${articlesDAO.getArticle(item.key.getId()).getPrice()} * this.value).toFixed(2) + ' ¥';
-                                            calculateTotal();
-                                        "
+                                                document.getElementById('${item.key.getId()}-price').innerHTML = updatePrice(${item.key.getPrice()}, this.value);
+                                                calculateTotal();
+                                                "
                                     />
                                 </div>
                             </div>
