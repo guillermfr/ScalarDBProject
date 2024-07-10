@@ -36,7 +36,7 @@ public class ArticlesDAO {
     public void addArticle(
             long id,
             String name,
-            float price,
+            int price,
             int stock,
             String image
     ) throws Exception {
@@ -53,7 +53,7 @@ public class ArticlesDAO {
                                 .table("articles")
                                 .partitionKey(Key.ofBigInt("id", id))
                                 .textValue("name", name)
-                                .floatValue("price", price)
+                                .intValue("price", price)
                                 .intValue("stock", stock)
                                 .textValue("image", image)
                                 .build());
@@ -69,7 +69,7 @@ public class ArticlesDAO {
 
     public void addArticle(
             String name,
-            float price,
+            int price,
             int stock,
             String image
     ) throws Exception {
@@ -95,7 +95,7 @@ public class ArticlesDAO {
                                 .table("articles")
                                 .partitionKey(Key.ofBigInt("id", articles.getId()))
                                 .textValue("name", articles.getName())
-                                .floatValue("price", articles.getPrice())
+                                .intValue("price", articles.getPrice())
                                 .intValue("stock", articles.getStock())
                                 .textValue("image", articles.getImage())
                                 .build()
@@ -122,7 +122,7 @@ public class ArticlesDAO {
 //                            .table("articles")
 //                            .partitionKey(Key.ofBigInt("id", articles.getId()))
 //                            .textValue("name", articles.getName())
-//                            .floatValue("price", articles.getPrice())
+//                            .intValue("price", articles.getPrice())
 //                            .intValue("stock", articles.getStock())
 //                            .textValue("image", articles.getImage())
 //                            .build()
@@ -182,7 +182,7 @@ public class ArticlesDAO {
 
             return new Articles(
                     result.get().getText("name"),
-                    result.get().getFloat("price"),
+                    result.get().getInt("price"),
                     result.get().getInt("stock"),
                     result.get().getText("image"),
                     result.get().getBigInt("id")
@@ -210,7 +210,7 @@ public class ArticlesDAO {
                     transaction.commit();
                     return new Articles(
                             result.getText("name"),
-                            result.getFloat("price"),
+                            result.getInt("price"),
                             result.getInt("stock"),
                             result.getText("image"),
                             result.getBigInt("id")
@@ -240,7 +240,7 @@ public class ArticlesDAO {
             for (Result result : results) {
                 articlesList.add(new Articles(
                         result.getText("name"),
-                        result.getFloat("price"),
+                        result.getInt("price"),
                         result.getInt("stock"),
                         result.getText("image"),
                         result.getBigInt("id")));

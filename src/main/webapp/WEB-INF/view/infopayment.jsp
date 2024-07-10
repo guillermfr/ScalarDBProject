@@ -56,7 +56,7 @@
                     let discount = ${Math.round(sessionScope.get("user").getLoyaltyPoints().doubleValue())};
 
                     if (document.getElementById('usePoints').checked) total -= discount;
-                    document.getElementById('total').innerHTML = 'Total: ¥' + total.toFixed(2);
+                    document.getElementById('total').innerHTML = 'Total: ¥' + total;
 
                     if (Math.floor(total) < Math.floor(${sessionScope.get("total")})) awardedLoyaltyPoints = Math.floor(total) / 100;
                     document.getElementById('awardedLoyaltyPoints').innerHTML = 'This purchase will earn you ' + awardedLoyaltyPoints + ` loyalty point\${awardedLoyaltyPoints <= 1 ? '' : 's'}`;

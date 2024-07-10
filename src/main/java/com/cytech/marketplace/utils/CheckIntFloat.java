@@ -11,15 +11,4 @@ public class CheckIntFloat {
         }
         return true;
     }
-
-    public static boolean checkFloat(String a) {
-        try {
-            float test = Float.parseFloat(a);
-        }
-        catch (NumberFormatException nfe) {
-            return false;
-        }
-        return true;
-    }
-
 }

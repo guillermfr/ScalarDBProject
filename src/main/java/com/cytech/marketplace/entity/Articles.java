@@ -2,19 +2,19 @@ package com.cytech.marketplace.entity;
 
 public class Articles {
     private String name;
-    private float price;
+    private int price;
     private int stock;
     private String image;
     private long id;
 
-    public Articles(String nom, float prix, int stock, String image) {
+    public Articles(String nom, int prix, int stock, String image) {
         this.name = nom;
         this.price = prix;
         this.stock = stock;
         this.image = image;
     }
 
-    public Articles(String nom, float prix, int stock, String image, long id) {
+    public Articles(String nom, int prix, int stock, String image, long id) {
         this.name = nom;
         this.price = prix;
         this.stock = stock;
@@ -36,7 +36,7 @@ public class Articles {
         return (int)price;
     }
 
-    public void setPrice(float price) {
+    public void setPrice(int price) {
         this.price = price;
     }
 

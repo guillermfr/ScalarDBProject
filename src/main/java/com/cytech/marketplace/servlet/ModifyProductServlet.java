@@ -26,7 +26,7 @@ public class ModifyProductServlet extends HttpServlet {
     }
 
     private boolean checkValues(String nom, String prix, String stock, String image) {
-        return !checkEmpty(nom, prix, stock, image) && CheckIntFloat.checkInt(stock) && CheckIntFloat.checkFloat(prix);
+        return !checkEmpty(nom, prix, stock, image) && CheckIntFloat.checkInt(stock) && CheckIntFloat.checkInt(prix);
     }
 
     @Override
@@ -42,7 +42,7 @@ public class ModifyProductServlet extends HttpServlet {
         boolean correctValues = checkValues(nom, prix, stock, image);
 
         if(correctValues) {
-            Articles modifiedProduct = new Articles(nom, Float.parseFloat(prix), Integer.parseInt(stock), image);
+            Articles modifiedProduct = new Articles(nom, Integer.parseInt(prix), Integer.parseInt(stock), image);
             modifiedProduct.setId(Long.parseLong(id));
             try {
                 articlesDAO.updateArticle(modifiedProduct);

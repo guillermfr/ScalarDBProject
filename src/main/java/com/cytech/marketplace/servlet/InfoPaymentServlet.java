@@ -86,7 +86,7 @@ public class InfoPaymentServlet extends HttpServlet {
                 }
             }
 
-            float total = (float) req.getSession().getAttribute("total");
+            int total = (int) req.getSession().getAttribute("total");
             int loyaltyPoints = 0;
             if (usePoints) {
                 loyaltyPoints = user.getLoyaltyPoints();

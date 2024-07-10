@@ -7,7 +7,7 @@
     "columns": {
       "id": "BIGINT",
       "name": "TEXT",
-      "price": "FLOAT",
+      "price": "INT",
       "stock": "INT",
       "image": "TEXT"
     }

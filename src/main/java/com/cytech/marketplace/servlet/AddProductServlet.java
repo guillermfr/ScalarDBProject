@@ -29,7 +29,7 @@ public class AddProductServlet extends HttpServlet {
     }
 
     private boolean checkValues(String nom, String prix, String stock, String image) {
-        return !checkEmpty(nom, prix, stock, image) && CheckIntFloat.checkInt(stock) && CheckIntFloat.checkFloat(prix);
+        return !checkEmpty(nom, prix, stock, image) && CheckIntFloat.checkInt(stock) && CheckIntFloat.checkInt(prix);
     }
 
     @Override
@@ -48,7 +48,7 @@ public class AddProductServlet extends HttpServlet {
             ArticlesDAO articlesDAO = new ArticlesDAO();
             // Articles newProduct = new Articles(nom, new BigDecimal(prix), new BigInteger(stock), image);
             try {
-                articlesDAO.addArticle(nom, Float.parseFloat(prix), Integer.parseInt(stock), image);
+                articlesDAO.addArticle(nom, Integer.parseInt(prix), Integer.parseInt(stock), image);
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
