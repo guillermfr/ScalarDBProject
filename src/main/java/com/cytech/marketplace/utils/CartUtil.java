@@ -30,9 +30,17 @@ public class CartUtil {
      */
     public static void addArticleToCart(HttpServletRequest req, Articles article, int quantity) throws Exception {
         Map<Articles, Integer> cart = getCart(req);
-        if (cart.containsKey(article)) {
-            cart.put(article, cart.get(article) + quantity);
-        } else {
+
+        boolean isPresent = false;
+        for (Map.Entry<Articles, Integer> entry : cart.entrySet()) {
+            if (entry.getKey().getId() == article.getId()) {
+                cart.put(entry.getKey(), entry.getValue() + quantity);
+                isPresent = true;
+                break;
+            }
+        }
+
+        if (!isPresent) {
             cart.put(article, quantity);
         }
         req.getSession().setAttribute("cart", cart);
@@ -52,10 +60,18 @@ public class CartUtil {
         Map<Articles, Integer> sessionCart = getCart(req);
         Map<Articles, Integer> databaseCart = UsersUtil.getCart(users);
 
+        boolean isPresent = false;
+
         for (Map.Entry<Articles, Integer> entry : sessionCart.entrySet()) {
-            if (databaseCart.containsKey(entry.getKey())) {
-                databaseCart.put(entry.getKey(), entry.getValue() + databaseCart.get(entry.getKey()));
-            } else {
+            for (Map.Entry<Articles, Integer> entry2 : databaseCart.entrySet()) {
+                if (entry.getKey().getId() == entry2.getKey().getId()) {
+                    databaseCart.put(entry2.getKey(), entry.getValue() + entry2.getValue());
+                    isPresent = true;
+                    break;
+                }
+            }
+
+            if (!isPresent) {
                 databaseCart.put(entry.getKey(), entry.getValue());
             }
         }

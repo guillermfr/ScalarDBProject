@@ -16,23 +16,31 @@ import java.util.UUID;
 
 @WebServlet(name = "productPageController", value = "/productPage")
 public class ProductPageController extends HttpServlet {
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
         String productId = req.getParameter("id");
         Map<Articles, Integer> cart = CartUtil.getCart(req);
 
-
         if (productId != null && !productId.isEmpty()) {
             ArticlesDAO articlesDAO = new ArticlesDAO();
             Articles product = null;
             try {
-                product = articlesDAO.getArticle(productId);
+                product = articlesDAO.getArticle(Long.parseLong(productId));
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
 
-            if (cart.containsKey(product)) {
-                int qtyInCart = cart.get(product);
+            Articles finalProduct = product;
+            for (Map.Entry<Articles, Integer> entry : cart.entrySet()) {
+                if (entry.getKey().getId() == product.getId()) {
+                    finalProduct = entry.getKey();
+                    break;
+                }
+            }
+
+            if (cart.containsKey(finalProduct)) {
+                int qtyInCart = cart.get(finalProduct);
                 req.setAttribute("qty", qtyInCart);
             } else {
                 req.setAttribute("qty", 0);

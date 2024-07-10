@@ -34,11 +34,23 @@ public class UsersUtil {
      */
     public static void addArticleToCart(Users user, Articles article, int quantity) throws Exception {
         Map<Articles, Integer> cart = getCart(user);
-        if (cart.containsKey(article)) {
-            cart.put(article, quantity + cart.get(article));
-        } else {
+
+        boolean isPresent = false;
+        System.out.println(cart);
+        for (Map.Entry<Articles, Integer> entry : cart.entrySet()) {
+            System.out.println(entry.getKey().getId() + " " + article.getId());
+            if (entry.getKey().getId() == article.getId()) {
+                cart.put(entry.getKey(), entry.getValue() + quantity);
+                isPresent = true;
+                break;
+            }
+        }
+        System.out.println(cart);
+
+        if (!isPresent) {
             cart.put(article, quantity);
         }
+        System.out.println(cart);
         setCart(user, cart);
     }
 

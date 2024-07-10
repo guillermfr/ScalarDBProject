@@ -33,19 +33,30 @@ public class AddToCartServlet extends HttpServlet {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        if (cart.containsKey(product)) {
-            int qtyInCart = cart.get(product);
+
+        boolean isPresent = false;
+        Articles finalProduct = product;
+        for (Map.Entry<Articles, Integer> entry : cart.entrySet()) {
+            if (entry.getKey().getId() == product.getId()) {
+                isPresent = true;
+                finalProduct = entry.getKey();
+                break;
+            }
+        }
+
+        if (isPresent) {
+            int qtyInCart = cart.get(finalProduct);
             int toPutInCart = qty + qtyInCart;
-            if (product.getStock() < 0){
-                int correctedQty = abs(qtyInCart - product.getStock());
+            if (finalProduct.getStock() < 0){
+                int correctedQty = abs(qtyInCart - finalProduct.getStock());
                 try {
-                    CartUtil.addArticleToCart(req, product, correctedQty);
+                    CartUtil.addArticleToCart(req, finalProduct, correctedQty);
                 } catch (Exception e) {
                     throw new RuntimeException(e);
                 }
             } else {
                 try {
-                    CartUtil.addArticleToCart(req, product, qty);
+                    CartUtil.addArticleToCart(req, finalProduct, qty);
                 } catch (Exception e) {
                     throw new RuntimeException(e);
                 }
