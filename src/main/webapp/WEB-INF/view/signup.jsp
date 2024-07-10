@@ -7,7 +7,7 @@
 
 <html>
 <head>
-    <title>Inscription</title>
+    <title>Signing up</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body>

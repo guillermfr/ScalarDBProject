@@ -2,7 +2,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Information before the payment</title>
+    <title>Personal information</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
