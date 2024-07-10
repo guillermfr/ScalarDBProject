@@ -17,9 +17,12 @@ import java.util.Properties;
 public class ArticlesDAO {
     private final DistributedTransactionManager manager;
 
+    private static final String ARTICLES_NAMESPACE = "marketplace";
+    private static final String ARTICLES_TABLE = "articles";
+
     public ArticlesDAO() throws IOException {
         Properties loadProperties = new Properties();
-        try (InputStream input = getClass().getClassLoader().getResourceAsStream("scalardb.properties")) {
+        try (InputStream input = getClass().getClassLoader().getResourceAsStream("articles.properties")) {
             loadProperties.load(input);
         } catch (IOException e) {
             throw e;
@@ -49,8 +52,8 @@ public class ArticlesDAO {
             if (article == null) {
                 transaction.put(
                         Put.newBuilder()
-                                .namespace("marketplace")
-                                .table("articles")
+                                .namespace(ARTICLES_NAMESPACE)
+                                .table(ARTICLES_TABLE)
                                 .partitionKey(Key.ofBigInt("id", id))
                                 .textValue("name", name)
                                 .intValue("price", price)
@@ -83,16 +86,16 @@ public class ArticlesDAO {
             transaction = manager.start();
             Optional<Result> existingArticle = transaction.get(
                     Get.newBuilder()
-                            .namespace("marketplace")
-                            .table("articles")
+                            .namespace(ARTICLES_NAMESPACE)
+                            .table(ARTICLES_TABLE)
                             .partitionKey(Key.ofBigInt("id", articles.getId()))
                             .build()
             );
             if (existingArticle.isPresent()) {
                 transaction.put(
                         Put.newBuilder()
-                                .namespace("marketplace")
-                                .table("articles")
+                                .namespace(ARTICLES_NAMESPACE)
+                                .table(ARTICLES_TABLE)
                                 .partitionKey(Key.ofBigInt("id", articles.getId()))
                                 .textValue("name", articles.getName())
                                 .intValue("price", articles.getPrice())
@@ -118,8 +121,8 @@ public class ArticlesDAO {
 //            transaction = manager.start();
 //            transaction.put(
 //                    Put.newBuilder()
-//                            .namespace("marketplace")
-//                            .table("articles")
+//                            .namespace(ARTICLES_NAMESPACE)
+//                            .table(ARTICLES_TABLE)
 //                            .partitionKey(Key.ofBigInt("id", articles.getId()))
 //                            .textValue("name", articles.getName())
 //                            .intValue("price", articles.getPrice())
@@ -142,8 +145,8 @@ public class ArticlesDAO {
             transaction = manager.start();
             transaction.delete(
                     Delete.newBuilder()
-                            .namespace("marketplace")
-                            .table("articles")
+                            .namespace(ARTICLES_NAMESPACE)
+                            .table(ARTICLES_TABLE)
                             .partitionKey(Key.ofBigInt("id", id))
                             .build());
             transaction.commit();
@@ -170,8 +173,8 @@ public class ArticlesDAO {
             Optional<Result> result =
                     transaction.get(
                             Get.newBuilder()
-                                    .namespace("marketplace")
-                                    .table("articles")
+                                    .namespace(ARTICLES_NAMESPACE)
+                                    .table(ARTICLES_TABLE)
                                     .partitionKey(Key.ofBigInt("id", id))
                                     .build());
             if (!result.isPresent()) {
@@ -200,8 +203,8 @@ public class ArticlesDAO {
         try {
             transaction = manager.start();
             Scan scan = Scan.newBuilder()
-                    .namespace("marketplace")
-                    .table("articles")
+                    .namespace(ARTICLES_NAMESPACE)
+                    .table(ARTICLES_TABLE)
                     .all().build();
 
             List<Result> resultList = transaction.scan(scan);
@@ -232,8 +235,8 @@ public class ArticlesDAO {
         try {
             transaction = manager.start();
             Scan scan = Scan.newBuilder()
-                    .namespace("marketplace")
-                    .table("articles")
+                    .namespace(ARTICLES_NAMESPACE)
+                    .table(ARTICLES_TABLE)
                     .all().build();
 
             List<Result> results = transaction.scan(scan);
