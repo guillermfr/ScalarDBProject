@@ -9,18 +9,15 @@
             var overallTotal = 0;
 
             items.forEach(function(item) {
-                overallTotal += parseInt(item.innerHTML);
-                console.log("overallTotal: " + overallTotal)
+                overallTotal += parseInt(item.innerHTML.replace("¥", ""));
             });
 
-            document.getElementById('total').innerHTML = overallTotal + ' ¥';
+            document.getElementById('total').innerHTML = "¥" + overallTotal;
         }
 
         function updatePrice(price, value) {
-            console.log("test");
             const result = price * value;
-            console.log("result: " + result);
-            return result + ' ¥';
+            return "¥" + result;
         }
 
         window.onload = calculateTotal;
@@ -51,7 +48,7 @@
                              </div>
                             <div class="flex flex-row">
                                 <div class="mx-4 flex flex-col justify-center">
-                                    <span id="${item.key.getId()}-price" class="mb-2 text-right">${item.key.getPrice() * item.value} ¥</span>
+                                    <span id="${item.key.getId()}-price" class="mb-2 text-right">¥${item.key.getPrice() * item.value}</span>
                                     <label for="${item.key.getId()}-input"></label>
                                     <input
                                         id="${item.key.getId()}-input"

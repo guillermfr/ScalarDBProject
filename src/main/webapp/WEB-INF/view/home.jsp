@@ -45,7 +45,7 @@
                             <img src="<%= bestSeller.getImage() %>" alt="product image" class="mx-auto mb-2 max-h-32">
                             <div>
                                 <h3 class="text-center mb-2"><%= bestSeller.getName() %></h3>
-                                <p class="text-center"><%= bestSeller.getPrice() %>¥</p>
+                                <p class="text-center">¥<%= bestSeller.getPrice() %></p>
                             </div>
                         </div>
                     </a>
@@ -64,7 +64,7 @@
                                 <img src="<%= product.getImage() %>" alt="product image" class="mx-auto mb-2 max-h-32">
                                 <div>
                                     <h3 class="text-center mb-2"><%= product.getName() %></h3>
-                                    <p class="text-center"><%= product.getPrice() %>¥</p>
+                                    <p class="text-center">¥<%= product.getPrice() %></p>
                                 </div>
                             </div>
                         </a>
